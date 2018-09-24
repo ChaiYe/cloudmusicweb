@@ -26,4 +26,8 @@ public class HelloController {
         return "bg/add/add_role";
     }
 
+    @RequestMapping("/login")
+    public String getlogin(){
+        return "bg/login.html";
+    }
 }

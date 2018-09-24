@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CloudMusic登录页面</title>
+    <script src="bg/layui/layui.js"></script>
+    <link rel="stylesheet" href="bg/layui/css/layui.css">
+    <style>
+        .context{
+            width: 45%;
+            height: 50%;
+            margin: 150px auto;
+            padding: 20px 30px;
+            box-shadow: #ccc 0px  0px 25px;
+        }
+    </style>
+    <script src="bg/js/vue.js"></script>
+    <script src="bg/js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<div class="context">
+    <form class="layui-form" id="form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">昵称</label>
+            <div class="layui-input-block">
+                <input type="text" name="nikeName" lay-verify="title" placeholder="请输入您的昵称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="password" class="layui-input" placeholder="请输入您的密码">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">验证码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code" class="layui-input" @blur="verifyCode" v-model="code">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <img alt="验证码" onclick = "this.src='user/defaultKaptcha?d='+new Date()*1" src="user/defaultKaptcha" />
+                    <span style="padding-left: 25px">{{verifyMessage}}</span>
+                </div>
+            </div>
+        </div>
+        <div style="margin-left: 100px">
+            <input type="submit" class="layui-btn layui-btn-success" value="登录">
+            <input type="reset" class="layui-btn layui-btn-success" value="重置">
+        </div>
+    </form>
+    </div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#form',
+        data: {
+            code: '',
+            verifyMessage:''
+        },
+        methods:{
+            verifyCode:function (event) {
+                /*alert(this.code);*/
+                $.ajax({
+                        data:{"code":this.code},
+                       url: "http://localhost:8080/user/imgvrifyControllerDefaultKaptcha",
+                        success:function (data) {
+                            console.log(data);
+                            if(data.code=="200"){
+                                window.location.href="http://localhost:8080/rolestable"
+                            }else{
+                                app.verifyMessage="错误";
+                            }
+                        },
+                        error:function (data) {
+                            console.log(data)
+                        }
+                    });
+            }
+        }
+    })
+</script>
+</html>

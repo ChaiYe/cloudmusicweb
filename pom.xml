@@ -33,6 +33,7 @@
 		<kaptcha.version>0.0.9</kaptcha.version>
 		<swagger.version>2.7.0</swagger.version>
 		<pagehelper.version>4.1.4</pagehelper.version>
+		<kaptcha.version>2.3.2</kaptcha.version>
 	</properties>
 
 	<dependencies>
@@ -136,7 +137,7 @@
 			<version>${commons.io.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.github.axet</groupId>
+			<groupId>com.github.penggle</groupId>
 			<artifactId>kaptcha</artifactId>
 			<version>${kaptcha.version}</version>
 		</dependency>
