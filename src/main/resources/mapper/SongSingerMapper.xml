@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.SongSingerMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.SongSinger" id="SongSingerMap">
+        <result property="songSingerId" column="song_singer_id"/>
+        <result property="songSingerSong" column="song_singer_song"/>
+        <result property="songSingerSinger" column="song_singer_singer"/>
+    </resultMap>
+
+</mapper>

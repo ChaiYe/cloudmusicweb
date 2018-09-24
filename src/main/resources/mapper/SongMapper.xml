@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.SongMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.Song" id="SongMap">
+        <result property="songId" column="song_id"/>
+        <result property="name" column="name"/>
+        <result property="picUrl" column="pic_url"/>
+        <result property="isActive" column="is_active"/>
+        <result property="isVip" column="is_vip"/>
+        <result property="size" column="size"/>
+        <result property="lyric" column="lyric"/>
+        <result property="storageUrl" column="storage_url"/>
+        <result property="playback" column="playback"/>
+        <result property="collection" column="collection"/>
+        <result property="uploadTime" column="upload_time"/>
+        <result property="note" column="note"/>
+        <result property="durationTime" column="duration_time"/>
+        <result property="integral" column="integral"/>
+        <result property="songAlbum" column="song_album"/>
+        <result property="songKindIncrease" column="song_kind_increase"/>
+        <result property="songCommentIncrease" column="song_comment_increase"/>
+    </resultMap>
+
+</mapper>

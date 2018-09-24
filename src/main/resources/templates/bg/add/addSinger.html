@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>添加歌星</title>
+
+</head>
+<body>
+<div style="width: 50%;margin: 58px auto">
+    <form class="layui-form" action="http://localhost:8080/cloudmusic/insert_singer" id="app" enctype="multipart/form-data" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">歌手姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" autocomplete="off" placeholder="请输入歌手姓名"  class="layui-input" v-on:blur="greet($event)">
+                <div>{{nameInfo}}</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">自我简言</label>
+            <div class="layui-input-block">
+                <input type="text" name="selfIntro" placeholder="简短自我介绍" class="layui-input">
+            </div>
+        </div>
+      <div class="layui-form-item">
+            <label class="layui-form-label">选择地区</label>
+            <div class="layui-input-inline">
+                <select name="province" lay-filter="province"  class="province">
+                    <option value="">请选择省</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select name="city" lay-filter="city" disabled>
+                    <option value="">请选择市</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select name="area" lay-filter="area" disabled>
+                    <option value="">请选择县/区</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">出生日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="birthday" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上传图片</label>
+            <div class="layui-upload">
+               <button type="button" class="layui-btn" id="upload">上传图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo1" >
+                    <p id="demoText"></p>
+                </div>
+                <!--<input type="file" name="file">-->
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">编辑器</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea layui-hide" name="introduction" id="LAY_demo_editor"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="submit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script src="../../js/vue.js"></script>
+<link rel="stylesheet" href="../../layui/css/layui.css">
+<script src="../../layui/layui.js"></script>
+<script src="../../js/address.js"></script>
+<!--数据校验-->
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            nameInfo:''
+        },
+        methods:{
+            greet:function (e) {
+                if(!new RegExp("^[a-z]+$").test(e.currentTarget.value)){
+                    this.nameInfo= '用户名不能有特殊字符';
+                }else{
+                    this.nameInfo='';
+                }
+
+            },
+            process:function (e) {
+                //获取输入框的值
+                console.log(e.currentTarget.value);
+            }
+        }
+    })
+</script>
+<!--省级联动-->
+<script type="text/javascript">
+    layui.config({
+        base : "../../js/" //address.js的路径
+    }).use([ 'layer', 'jquery', "address" ], function() {
+        var layer = layui.layer, $ = layui.jquery, address = layui.address();
+
+    });
+</script>
+<!--起用LayUI的组件-->
+<script>
+    layui.use(['form', 'layedit', 'laydate','upload'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,$ = layui.jquery
+            ,upload = layui.upload
+            ,laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //监听指定开关
+        form.on('switch(switchTest)', function(data){
+            layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            });
+            return false;
+        });
+
+        /*图片上传*/
+        upload.render({
+            elem: '#upload'
+            ,auto: false
+           ,bindAction: '#app'
+            ,done: function(res){
+                console.log(res)
+            }
+        });
+    });
+</script>
+
+</html>

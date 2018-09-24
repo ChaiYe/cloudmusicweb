@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>layui在线调试</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <style>
+        body{margin: 10px;}
+    </style>
+    <script src="../../js/jquery-3.3.1.js"></script>
+
+
+</head>
+<body>
+
+
+<table class="layui-hide" id="demo" lay-filter="test"></table>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm"  lay-event="addPerssions">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">更新</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script src="../../layui/layui.js"></script>
+<script>
+    layui.config({
+        version: '1535898708529' //为了更新 js 缓存，可忽略
+    });
+
+    layui.use(['laypage', 'layer', 'table'], function(){
+        var laydate = layui.laydate //日期
+            ,laypage = layui.laypage //分页
+            ,layer = layui.layer //弹层
+            ,table = layui.table //表格
+
+        //执行一个 table 实例
+        table.render({
+            elem: '#demo'
+            ,height: 420
+            ,url: 'http://localhost:8080/cloudmusic/roleall' //数据接口
+            ,title: '权限表'
+            ,page: true //开启分页
+            ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            ,totalRow: true //开启合计行
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'ID', width:180, fixed: 'left', unresize: true, sort: true}
+                ,{field:'roleName', title:'角色名', width:380,edit:true}
+                ,{field:'descpt', title:'描述', width:380,edit:true}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
+
+            ]]
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        type:'GET',
+                        url:'http://localhost:8080/cloudmusic/del_role/',
+                        data:{"id":obj.data.id},
+                        dataType:"json",
+                        success: function(data){
+                            alert("nnnnssdsd");
+                        },
+                        error:function (data) {
+                            obj.del();
+                        }
+                    });
+
+                    layer.close(index);
+                    //向服务端发送删除指令
+                });
+            } else if(layEvent === 'edit'){
+                console.log(data.id);
+                console.log(data.roleName);
+                console.log(data.descpt);
+                $.ajax({
+                    type:"post",
+                    url:'http://localhost:8080/cloudmusic/update_role',
+                    dataType:"JSON",
+                    async:false,
+                    data:{
+                        "id":data.id,
+                        "roleName":data.roleName,
+                        "descpt":data.descpt
+                    },
+                    success:function (data) {
+                        window.location.href="http://localhost:63343/CloudMusicBg/html/roleTable.html"
+                    }
+                })
+            }
+        });
+
+
+        //分页
+        laypage.render({
+            elem: 'pageDemo' //分页容器的id
+            ,count: 90 //总页数
+            ,skin: '#1E9FFF' //自定义选中色值
+            //,skip: true //开启跳页
+            ,jump: function(obj, first){
+                console.log(first);
+                if(!first){
+                    layer.msg('第'+ obj.curr +'页', {offset: 'b'});
+                }
+            }
+        });
+
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+                case'addPerssions':
+                    layer.open({
+                        type: 2,
+                        area: ['50%', '50%'], //宽高
+                        content: 'add/addPermission.html',
+                        cancel: function (index) {
+                            window.location.href="perssionTable.html"
+                        }
+                    });
+
+                    break;
+            };
+        });
+    });
+</script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset = "utf-8">
+    <title>form 自定义验证</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+</head>
+<body>
+<form class = "layui-form">
+    <br>
+    <div class = "layui-form-item">
+        <label class = "layui-form-label">自定义验证</label>
+        <div class = "layui-input-block">
+            <input type="text" class="layui-input" lay-verify="username" placeholder="请输入用户名">
+            <br>
+            <input type="password" class="layui-input" lay-verify="pass" placeholder="请输入密码">
+        </div>
+    </div>
+
+    <div class = "layui-form-item">
+        <div class = "layui-form-block">
+            <label class = "layui-form-label"></label>
+            <button class = "layui-btn" lay-submit lay-filter="*">提交</button>
+            <button class = "layui-btn layui-btn-primary" type = "reset">重置</button>
+        </div>
+    </div>
+
+</form>
+</body>
+</html>
+
+<script src="../../layui/layui.js"></script>
+<script>
+    layui.use('form',function(){
+        var form = layui.form;
+
+        form.verify({
+            username: function(value, item){ //value：表单的值、item：表单的DOM对象
+                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                    return '用户名不能有特殊字符';
+                }
+                if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                    return '用户名首尾不能出现下划线\'_\'';
+                }
+                if(/^\d+\d+\d$/.test(value)){
+                    return '用户名不能全为数字';
+                }
+            }
+
+            //我们既支持上述函数式的方式，也支持下述数组的形式
+            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            ,pass: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+        });
+    });
+
+
+    /*
+    * //自定义验证规则
+form.verify({
+	name: function(value, item){//value：表单的值、item：表单的DOM对象
+            if(!new RegExp('^[a-zA-Z0-9_\u4e00-\u9fa5\s·]+$').test(value)){
+                 return '不能有特殊字符';
+            }
+            if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                  return '首尾不能出现下划线\'_\'';
+            }
+            var minlength = $(item).attr("minlength");
+            if(minlength && value.length < minlength){
+      	      return '长度至少为'+minlength+"位";
+            }
+            if(/^\d+$/.test(value)){
+                return '不能全为数字';
+            }
+	},
+	mobile: function(value, item){
+	    var msg;
+	    $.ajax({
+	        type: "POST",
+	        url: '/quote-web/api/supplier/checkMobile',
+                async: false, // 使用同步的方法
+                data: {
+                    id: $("#id").val(),
+                    mobile:value
+                },
+                dataType: 'json',
+                success: function(result) {
+                    if (result.code == 200 && result.data == true) {
+                        msg = result.msg;//return写在最后面，之前我在这里直接return，无法实现验证
+                    }
+                }
+            });
+	    return msg;
+	}
+});
+*/
+</script>

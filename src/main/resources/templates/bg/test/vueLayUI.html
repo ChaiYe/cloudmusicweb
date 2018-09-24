@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div id="app">
+    {{ message }}
+    <button v-on:click="greet">Add 1</button>
+
+
+<form class = "layui-form">
+    <br>
+    <div class = "layui-form-item">
+        <label class = "layui-form-label">自定义验证</label>
+
+        <div class = "layui-input-block" >
+            <input type="text" class="layui-input" placeholder="请输入用户名"  v-on:blur="greet()" v-model="message">
+            <div>{{mm}}</div>
+            <br>
+            <input type="password" class="layui-input"  placeholder="请输入密码" v-on:blur="process($event)">
+        </div>
+    </div>
+</form>
+</div>
+</body>
+<script src="../../js/vue.js"></script>
+<script>
+        var app = new Vue({
+        el: '#app',
+            data: {
+                 message: 'Hello Vue!',
+                mm:''
+            },
+            methods:{
+                greet:function (value) {
+                    if(!new RegExp("^[a-z]+$").test(this.message)){
+                        alert(this.message);
+                        this.mm= '用户名不能有特殊字符';
+                    }else{
+                        this.mm='';
+                    }
+
+                },
+                process:function (e) {
+                    //获取输入框的值
+                    console.log(e.currentTarget.value);
+                }
+            }
+        })
+</script>
+</html>

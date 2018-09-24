@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.FocusMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.Focus" id="FocusMap">
+        <result property="focusId" column="focus_id"/>
+        <result property="focusFromUser" column="focus_from_user"/>
+        <result property="focusToUser" column="focus_to_user"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.MvMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.Mv" id="MvMap">
+        <result property="mvId" column="mv_id"/>
+        <result property="uploadtime" column="uploadtime"/>
+        <result property="playback" column="playback"/>
+        <result property="collection" column="collection"/>
+        <result property="download" column="download"/>
+        <result property="integral" column="integral"/>
+        <result property="mvPicUrl" column="mv_pic_url"/>
+        <result property="mvSong" column="mv_song"/>
+        <result property="mvKindIncrease" column="mv_kind_increase"/>
+        <result property="mvCommentIncrease" column="mv_comment_increase"/>
+    </resultMap>
+
+</mapper>

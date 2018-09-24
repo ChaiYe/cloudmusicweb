@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.LastSongMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.LastSong" id="LastSongMap">
+        <result property="lastSongId" column="last_song_id"/>
+        <result property="lastSongUser" column="last_song_user"/>
+        <result property="lastSongSong" column="last_song_song"/>
+        <result property="playTime" column="play_time"/>
+    </resultMap>
+
+</mapper>

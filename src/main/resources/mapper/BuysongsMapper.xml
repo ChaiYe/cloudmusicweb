@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.BuysongsMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.Buysongs" id="BuysongsMap">
+        <result property="buySongsId" column="buy_songs_id"/>
+        <result property="time" column="time"/>
+        <result property="buySongsUser" column="buy_songs_user"/>
+        <result property="buySong" column="buy_song"/>
+    </resultMap>
+
+</mapper>

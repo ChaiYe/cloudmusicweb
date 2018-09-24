@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<div>
+    <form method="post" id="form">
+        用户名:<input type="text" name="username" id="username"></br>
+        密码：<input type="text" name="password" id="password"></br>
+        <input type="submit" value="登录">
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+        //使用jQuery异步提交表单
+        $('#form').submit(function() {
+            console.log("发生了什么");
+           var username= $("#username").val();
+            var password=$("#password").val();
+            console.log("发生了什么"+username);
+            console.log("发生了什么"+password);
+            jQuery.ajax({
+                url:'http://localhost:8080/cloudmusic/login',
+                data:{"userName":username,"password":password},
+                type:"POST",
+                success:function(data)
+                {
+                },
+                error:function (data) {
+
+                }
+
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

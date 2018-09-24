@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.KindMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.Kind" id="KindMap">
+        <result property="kindId" column="kind_id"/>
+        <result property="kindKindIncrease" column="kind_kind_increase"/>
+        <result property="kindBaseKind" column="kind_base_kind"/>
+    </resultMap>
+</mapper>

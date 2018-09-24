@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.ChatsMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.Chats" id="ChatsMap">
+        <result property="chatsId" column="chats_id"/>
+        <result property="content" column="content"/>
+        <result property="charsUrl" column="chars_url"/>
+        <result property="time" column="time"/>
+        <result property="fromId" column="from_id"/>
+        <result property="toId" column="to_id"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.CommentMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.Comment" id="CommentMap">
+        <result property="commentId" column="comment_id"/>
+        <result property="commentTime" column="comment_time"/>
+        <result property="commentContent" column="comment_content"/>
+        <result property="commentUser" column="comment_user"/>
+        <result property="commentCommentIncrease" column="comment_comment_increase"/>
+        <result property="replyId" column="reply_id"/>
+        <result property="commentLikeIncrease" column="comment_like_increase"/>
+    </resultMap>
+
+</mapper>

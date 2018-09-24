@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<body>
+<div>
+    <div id="example">
+
+            <select v-model="prov" id="sheng" name="sheng">
+                <option v-for="option in arr" :value="option.name">
+                    {{ option.name }}
+                </option>
+            </select>
+            <select v-model="city" id="shi" name="shi">
+                <option v-for="option in cityArr" :value="option.name">
+                    {{ option.name }}
+                </option>
+            </select>
+            <select v-model="district" v-if="district" id="qu" name="qu">
+                <option v-for="option in districtArr" :value="option.name">
+                    {{ option.name }}
+                </option>
+            </select>
+
+
+    </div>
+</div>
+</body>
+<script src="../../js/vue.min.js" ></script>
+<script src="../../js/ld-resourse.js"></script>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.DynamicMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.Dynamic" id="DynamicMap">
+        <result property="dynamicId" column="dynamic_id"/>
+        <result property="time" column="time"/>
+        <result property="content" column="content"/>
+        <result property="likeNum" column="like_num"/>
+        <result property="dynamicUser" column="dynamic_user"/>
+        <result property="dynamicSong" column="dynamic_song"/>
+        <result property="dynamicCommentIncrease" column="dynamic_comment_increase"/>
+    </resultMap>
+
+</mapper>

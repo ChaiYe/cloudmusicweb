@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.UserinfoMapper">
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.Userinfo" id="UserinfoMap">
+        <result property="userinfoId" column="userinfo_id"/>
+        <result property="totalIntegral" column="total_integral"/>
+        <result property="isVip" column="is_vip"/>
+        <association property="user" column="userinfo_user" javaType="com.secondgroup.web.cloudmusicweb.entity.User">
+            <result property="userId" column="user_id"/>
+            <result property="name" column="name"/>
+            <result property="account" column="account"/>
+            <result property="password" column="password"/>
+            <result property="sex" column="sex"/>
+            <result property="birthday" column="birthday"/>
+            <result property="address" column="address"/>
+            <result property="introduce" column="introduce"/>
+            <result property="image" column="image"/>
+            <result property="registTime" column="regist_time"/>
+            <result property="state" column="state"/>
+        </association>
+    </resultMap>
+
+    <select id="getUserInfosList" resultMap="UserinfoMap">
+        select * from user,userinfo where userinfo.userinfo_user=user.user_id and user.type=0
+    </select>
+
+</mapper>
