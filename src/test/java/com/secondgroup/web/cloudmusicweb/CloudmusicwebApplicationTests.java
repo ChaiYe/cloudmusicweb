@@ -11,6 +11,8 @@ import com.secondgroup.web.cloudmusicweb.entity.Userinfo;
 import com.secondgroup.web.cloudmusicweb.mapper.RoleMapper;
 import com.secondgroup.web.cloudmusicweb.mapper.UserMapper;
 import com.secondgroup.web.cloudmusicweb.mapper.UserinfoMapper;
+import com.secondgroup.web.cloudmusicweb.service.IUserService;
+import com.secondgroup.web.cloudmusicweb.service.impl.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,6 +41,9 @@ public class CloudmusicwebApplicationTests {
 	@Autowired
 	private UserinfoMapper userinfoMapper;
 
+	@Autowired
+	private UserServiceImpl userService;
+
 	/**
 	 * 测试分页
 	 */
@@ -53,7 +59,7 @@ public class CloudmusicwebApplicationTests {
 
 	@Test
 	public  void cmdUser(){
-		//IPage<Userinfo> userinfoIPage =userinfoMapper.getUserInfosList(new Page<Userinfo>(1, 5), new QueryWrapper<Userinfo>());
+
 		PageHelper.startPage(1, 10);
 		List<Userinfo> userInfosList = userinfoMapper.getUserInfosList();
 		for (Userinfo c2 : userInfosList) {
@@ -61,5 +67,6 @@ public class CloudmusicwebApplicationTests {
 			Assert.assertNotNull(c2);
 			Assert.assertNotNull(c2.getUser());
 		}
+
 	}
 }

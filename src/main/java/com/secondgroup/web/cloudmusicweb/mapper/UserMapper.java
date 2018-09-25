@@ -2,6 +2,9 @@ package com.secondgroup.web.cloudmusicweb.mapper;
 
 import com.secondgroup.web.cloudmusicweb.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.secondgroup.web.cloudmusicweb.entity.extend.UserExtend;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +19,7 @@ public interface UserMapper extends BaseMapper<User> {
     public Integer selectlastId();
 
 
+    UserExtend getUserByusername(String username);
+
+    User getOneByName(String username);
 }

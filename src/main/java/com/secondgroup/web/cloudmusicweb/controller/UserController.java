@@ -3,11 +3,16 @@ package com.secondgroup.web.cloudmusicweb.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.secondgroup.web.cloudmusicweb.pagemodel.Msg;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,6 +36,33 @@ public class UserController {
 
     @Autowired
     DefaultKaptcha defaultKaptcha;
+
+
+    /**
+     * 登录密码校验
+     * @param userName
+     * @param password
+     */
+    @ResponseBody
+    @PostMapping("/login")
+    public Msg loginvalidate(String userName, String password){
+        Msg msg = new Msg();
+        Subject subject= SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(userName,password );
+        try{
+            subject.login(token);
+        }catch (Exception e){
+            msg.setMsg("500");
+            msg.setMsg("密码或用户名错误");
+            return msg;
+        }
+
+        msg.setCode("200");
+        msg.setMsg("密码无误");
+        return msg;
+
+    }
+
 
     /**
      * 生成验证码

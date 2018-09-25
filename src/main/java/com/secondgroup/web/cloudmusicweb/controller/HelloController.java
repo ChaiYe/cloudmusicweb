@@ -1,13 +1,17 @@
 package com.secondgroup.web.cloudmusicweb.controller;
 
+import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.security.RolesAllowed;
 
 @Controller
 public class HelloController {
 
     @RequestMapping("/hello")
-    public String Hello(){
+    public String hello(){
         return "test/BGManagement";
     }
 
@@ -15,6 +19,7 @@ public class HelloController {
     public String  myTable(){
         return "test/mytable";
     }
+
 
     @RequestMapping("/rolestable")
     public String roleTable(){
@@ -26,7 +31,7 @@ public class HelloController {
         return "bg/add/add_role";
     }
 
-    @RequestMapping("/login")
+    @GetMapping(value = "/login")
     public String getlogin(){
         return "bg/login.html";
     }

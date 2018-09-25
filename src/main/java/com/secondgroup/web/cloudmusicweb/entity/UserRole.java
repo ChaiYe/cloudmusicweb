@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -31,12 +33,16 @@ public class UserRole implements Serializable {
     /**
      * 关联用户
      */
-    private Integer userRoleUser;
+    @Getter
+    @Setter
+    private User userRoleUser;
 
     /**
      * 关联角色
      */
-    private Integer userRoleRole;
+    @Getter
+    @Setter
+    private Role userRoleRole;
 
 
 }

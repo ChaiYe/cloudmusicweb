@@ -2,6 +2,7 @@ package com.secondgroup.web.cloudmusicweb.mapper;
 
 import com.secondgroup.web.cloudmusicweb.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.secondgroup.web.cloudmusicweb.entity.extend.RoleExtend;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RoleMapper extends BaseMapper<Role> {
 
+    RoleExtend selectByIdWithPermisses(Integer roleId);
 }

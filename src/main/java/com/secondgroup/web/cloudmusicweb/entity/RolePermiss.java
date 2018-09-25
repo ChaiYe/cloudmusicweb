@@ -3,6 +3,8 @@ package com.secondgroup.web.cloudmusicweb.entity;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -23,17 +25,23 @@ public class RolePermiss implements Serializable {
     /**
      * 角色权限关联ID
      */
+    @Setter
+    @Getter
     private Integer rolePermissId;
 
     /**
      * 关联角色
      */
-    private Integer rolePermissRole;
+    @Setter
+    @Getter
+    private Role rolePermissRole;
 
     /**
      * 关联权限
      */
-    private Integer rolePermissPermiss;
+    @Setter
+    @Getter
+    private Permission rolePermissPermiss;
 
 
 }

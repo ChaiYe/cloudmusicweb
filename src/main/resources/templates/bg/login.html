@@ -19,17 +19,17 @@
 </head>
 <body>
 <div class="context">
-    <form class="layui-form" id="form" action="">
+    <form class="layui-form" id="form" action="user/login" method="post">
         <div class="layui-form-item">
             <label class="layui-form-label">昵称</label>
             <div class="layui-input-block">
-                <input type="text" name="nikeName" lay-verify="title" placeholder="请输入您的昵称" class="layui-input">
+                <input type="text" name="userName" lay-verify="title" placeholder="请输入您的昵称" class="layui-input" v-model="nikeName">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">密码</label>
             <div class="layui-input-block">
-                <input type="text" name="password" class="layui-input" placeholder="请输入您的密码">
+                <input type="text" name="password" class="layui-input" placeholder="请输入您的密码" v-model="password">
             </div>
         </div>
         <div class="layui-form-item">
@@ -47,7 +47,7 @@
             </div>
         </div>
         <div style="margin-left: 100px">
-            <input type="submit" class="layui-btn layui-btn-success" value="登录">
+            <input type="submit" class="layui-btn layui-btn-success" value="登录" @click="loginValidate">
             <input type="reset" class="layui-btn layui-btn-success" value="重置">
         </div>
     </form>
@@ -59,7 +59,9 @@
         el: '#form',
         data: {
             code: '',
-            verifyMessage:''
+            verifyMessage:'',
+            nikeName:'',
+            password:''
         },
         methods:{
             verifyCode:function (event) {
@@ -79,6 +81,26 @@
                             console.log(data)
                         }
                     });
+            },
+            loginValidate:function (event) {
+                alert("登录");
+                debugger;
+                $.ajax({
+                    method:"POST",
+                    data:{"userName":this.nikeName,"password":this.password},
+                    url: "http://localhost:8080/user/login",
+                    success:function (data) {
+                        console.log(data);
+                        if(data.code=="200"){
+                            window.location.href="http://localhost:8080/rolestable"
+                        }else{
+                            /*app.verifyMessage="错误";*/
+                        }
+                    },
+                    error:function (data) {
+                        console.log(data)
+                    }
+                });
             }
         }
     })

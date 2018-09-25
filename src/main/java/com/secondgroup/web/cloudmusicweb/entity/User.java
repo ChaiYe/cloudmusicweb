@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -105,4 +107,6 @@ public class User implements Serializable {
      */
     @Getter @Setter
     private Integer type;
+
+
 }

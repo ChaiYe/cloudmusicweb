@@ -2,10 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.RoleMapper">
 
+
+    <sql id="BASE_SQL">
+        `role`.`role_id`,
+        `role`.`role_name`,
+        `role`.`description`,
+        `permission`.`permission_id`,
+        `permission`.`permission`,
+        `permission`.`description`
+    </sql>
     <resultMap type="com.secondgroup.web.cloudmusicweb.entity.Role" id="RoleMap">
         <result property="roleId" column="role_id"/>
         <result property="roleName" column="role_name"/>
         <result property="description" column="description"/>
     </resultMap>
+
+    <resultMap id="RoleWithPression" type="com.secondgroup.web.cloudmusicweb.entity.extend.RoleExtend">
+        <result property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="description" column="description"/>
+        <collection property="rolePermisses" ofType="com.secondgroup.web.cloudmusicweb.entity.RolePermiss">
+            <association property="rolePermissPermiss" javaType="com.secondgroup.web.cloudmusicweb.entity.Permission">
+                <result property="permissionId" column="permission_id"/>
+                <result property="permission" column="permission"/>
+                <result property="description" column="description"/>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="selectByIdWithPermisses" resultMap="RoleWithPression">
+          select
+           <include refid="BASE_SQL"></include>
+          from role,role_permiss,permission
+          where role.role_id=role_permiss.role_permiss_role
+          and permission.permission_id=role_permiss.role_permiss_permiss
+          and role.role_id=#{roleId}
+    </select>
 
 </mapper>

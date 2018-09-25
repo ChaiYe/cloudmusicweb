@@ -3,6 +3,8 @@ package com.secondgroup.web.cloudmusicweb.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,40 +30,22 @@ public class Role implements Serializable {
      * 角色ID
      */
     @TableId(value = "role_id", type = IdType.AUTO)
+    @Getter
+    @Setter
     private Integer roleId;
 
     /**
      * 角色名称
      */
+    @Getter
+    @Setter
     private String roleName;
 
     /**
      * 角色描述
      */
+    @Getter
+    @Setter
     private String description;
 
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

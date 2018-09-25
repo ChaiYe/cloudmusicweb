@@ -3,6 +3,8 @@ package com.secondgroup.web.cloudmusicweb.service;
 import com.secondgroup.web.cloudmusicweb.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Set;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
 
+    Set<String>  findRoles( String username);
+
+    Set<String>  findPermissions(String username);
+
+    User getOneByName(String username);
 }

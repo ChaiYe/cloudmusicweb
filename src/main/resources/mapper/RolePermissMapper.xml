@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.secondgroup.web.cloudmusicweb.mapper.RolePermissMapper">
-
+<!--
     <resultMap type="com.secondgroup.web.cloudmusicweb.entity.RolePermiss" id="RolePermissMap">
         <result property="rolePermissId" column="role_permiss_id"/>
         <result property="rolePermissRole" column="role_permiss_role"/>
         <result property="rolePermissPermiss" column="role_permiss_permiss"/>
-    </resultMap>
+    </resultMap>-->
 
 </mapper>
