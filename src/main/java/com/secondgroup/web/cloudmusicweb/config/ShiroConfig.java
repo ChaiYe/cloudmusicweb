@@ -27,7 +27,10 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/user/*", "anon");
         filterChainDefinitionMap.put("/login", "anon");
         /*filterChainDefinitionMap.put("/rolestable","anon");*/
-        filterChainDefinitionMap.put("/**", "authc,perms[query]");
+
+        filterChainDefinitionMap.put("/**", "anon");
+        /*暂时注释*/
+        /*filterChainDefinitionMap.put("/**", "authc,perms[query]");*/
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         shiroFilterFactoryBean.setLoginUrl("/login");
         // 登录成功后要跳转的链接

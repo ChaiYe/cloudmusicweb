@@ -24,7 +24,7 @@ public class Album implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 专辑id
+     * 专辑id,@TableId指定主键策略IdType.AUTO为自增
      */
     @TableId(value = "album_id", type = IdType.AUTO)
     private Integer albumId;

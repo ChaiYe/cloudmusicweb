@@ -6,20 +6,6 @@
 
 </head>
 <body>
-<blockquote class="layui-elem-quote layui-text">
-
-       <span class="layui-breadcrumb">
-          <a href="">用户管理</a>
-          <a href="">歌手</a>
-          <a><cite>添加歌手</cite></a>
-        </span>
-
-</blockquote>
-
-
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend style="margin-left:20px ">添加歌手</legend>
-</fieldset>
 <div style="width: 50%;margin: 58px auto">
     <form class="layui-form" action="http://localhost:8080/cloudmusic/insert_singer" id="app" enctype="multipart/form-data" method="post">
         <div class="layui-form-item">
@@ -30,34 +16,9 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">昵称</label>
-            <div class="layui-input-block">
-                <input type="text" name="account" autocomplete="off" placeholder="请输入歌手昵称"  class="layui-input" >
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
-            <div class="layui-input-block">
-                <input type="text" name="password" autocomplete="off" placeholder="请输入密码"  class="layui-input" >
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">性别</label>
-            <div class="layui-input-block">
-                <input type="radio" name="sex" value="男" title="男">
-                <input type="radio" name="sex" value="女" title="女" checked>
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label class="layui-form-label">自我简言</label>
             <div class="layui-input-block">
                 <input type="text" name="selfIntro" placeholder="简短自我介绍" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">邮件</label>
-            <div class="layui-input-block">
-                <input type="text" name="email" placeholder="常用联系邮件" class="layui-input">
             </div>
         </div>
       <div class="layui-form-item">
@@ -142,9 +103,9 @@
 <script type="text/javascript">
     layui.config({
         base : "../../js/" //address.js的路径
-    }).use([ 'layer', 'jquery', "address" ,"element"], function() {
+    }).use([ 'layer', 'jquery', "address" ], function() {
         var layer = layui.layer, $ = layui.jquery, address = layui.address();
-        var element = layui.element;
+
     });
 </script>
 <!--起用LayUI的组件-->

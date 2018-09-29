@@ -109,4 +109,8 @@ public class User implements Serializable {
     private Integer type;
 
 
+    /**
+     * 邮箱
+     */
+    private String  email;
 }

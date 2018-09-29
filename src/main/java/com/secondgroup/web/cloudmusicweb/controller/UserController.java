@@ -1,13 +1,18 @@
 package com.secondgroup.web.cloudmusicweb.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.secondgroup.web.cloudmusicweb.entity.User;
 import com.secondgroup.web.cloudmusicweb.pagemodel.Msg;
+import com.secondgroup.web.cloudmusicweb.service.IUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 /**
  * <p>
@@ -36,7 +43,10 @@ public class UserController {
 
     @Autowired
     DefaultKaptcha defaultKaptcha;
-
+    @Autowired
+    private   IUserService iUserService;
+    @Autowired
+    JavaMailSenderImpl javaMailSender;
 
     /**
      * 登录密码校验
@@ -120,5 +130,62 @@ public class UserController {
         }
         return msg;
     }
+
+
+    /**
+     * 查找昵称是否已存在
+     * @param account 昵称
+     * @return  昵称已存在则返回msg500，否则返回msg200
+     * @throws Exception
+     */
+    @PostMapping("/findAccount")
+    public Msg findAccount(String account){
+        Msg msg = new Msg();
+
+        try {
+            QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+            userQueryWrapper.eq("account",account);
+            Integer count = iUserService.count(userQueryWrapper);
+            if (count== 0) {
+                msg.setCode("200");
+            }else {
+                msg.setCode("500");
+                msg.setMsg("该昵称已经存在");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  msg;
+    }
+
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/registered")
+    public Msg registered(User user) throws  Exception{
+        Msg msg = new Msg();
+
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper helper= new MimeMessageHelper(mimeMessage,true);
+
+        helper.setSubject("CloudMusic激活");
+        helper.setText("<div style='color:red;'>激活码："+"123"+"<div>",true);
+        helper.setTo(user.getEmail());
+        helper.setFrom("3156056300@qq.com");
+
+        helper.addAttachment("1.jpg",new File("D:\\壁纸\\wallhaven-363984.jpg"));
+
+        javaMailSender.send(mimeMessage);
+
+        user.setType(1);
+
+        boolean save = iUserService.save(user);
+
+        return  msg;
+    }
+
 
 }

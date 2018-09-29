@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <link rel="stylesheet" href="../../../bg/layui/css/layui.css">
+    <script src="../../../bg/layui/layui.js"></script>
+    <script src="../../../bg/js/jquery-3.3.1.js"></script>
+    <script src="../../../bg/js/vue.js"></script>
+    <script src="../../../bg/js/axios.min.js"></script>
+
+    <style>
+        .content{
+            width: 50%;
+            margin: 0 auto;
+            overflow: hidden;
+            padding:30px 40px;
+
+        }
+        .main{
+            margin: 36px 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend style="margin-left: 43%">注册</legend>
+    </fieldset>
+    <div class="main">
+        <form class="layui-form layui-form-pane" action="/user/registered" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name"  ref="name" autocomplete="on" placeholder="请输入用户名" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">昵称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="account"  id="account" ref="account" autocomplete="off" placeholder="请输入昵称" class="layui-input" @blur="findAccount">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password"  ref="password" autocomplete="off" placeholder="请输入密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-block">
+                    <input type="password"  id="comfirmpwd"  autocomplete="off" ref="comfirmpwd" placeholder="请重复输入您的密码" class="layui-input" @blur="comfirmpwd">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email" ref="email" autocomplete="off" placeholder="请输入您的邮箱" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+    });
+</script>
+<script>
+    new Vue({
+        el:'.main',
+        methods:{
+            findAccount:function (el) {
+                console.log(this.$refs.account.value);
+                /*axios.post('/user/findAccount', {
+                    "account":this.$refs.account.value
+                })
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });*/
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/findAccount',
+                    data: {
+                        "account":this.$refs.account.value
+                    },
+                    success: function (data) {
+                        if(data.code==500) {
+                            layer.tips(data.msg, '#account');
+                        }
+                    },
+                    error:function (data) {
+                        console.log(data);
+                    }
+                });
+            },
+            comfirmpwd:function () {
+
+                if(this.$refs.password.value!=this.$refs.comfirmpwd.value) {
+                    layer.tips("前后密码不一致", '#comfirmpwd');
+                }
+            }
+        }
+
+    });
+</script>
+
+</body>
+</html>

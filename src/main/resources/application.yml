@@ -59,6 +59,12 @@ spring:
     thymeleaf:
          mode: HTML
          cache: false
+  #邮件
+  mail:
+    username: 3156056300@qq.com
+    password: geoxbvuitnvwdgge
+    host: smtp.qq.com
+    properties.mail.smtp.ssl.enable: true
 #日志
 logging:
   level: debug
@@ -96,4 +102,5 @@ mybatis-plus:
     cache-enabled: false #配置的缓存的全局开关
     lazyLoadingEnabled: true #延时加载的开关
     multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
+
 

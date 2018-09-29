@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加歌曲</title>
+
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/jquery-3.3.1.js"></script>
+    <script src="../../layui/layui.js"></script>
+    <style>
+        .main{
+            width: 50%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <blockquote class="layui-elem-quote layui-text">
+
+       <span class="layui-breadcrumb">
+          <a href="">首页</a>
+          <a href="">歌曲管理</a>
+          <a><cite>添加歌曲</cite></a>
+        </span>
+    </blockquote>
+
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend style="margin-left:20px ">添加歌曲</legend>
+    </fieldset>
+
+    <div class="main">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">歌名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="请输入歌名"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">图片</label>
+                <div class="layui-input-block">
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="test1">上传图片</button>
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img" id="demo1" width="100px" height="100px">
+                            <p id="demoText"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">激活</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="isActive" lay-skin="switch" lay-text="ON|OFF">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">上传歌词</label>
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn" id="test3"><i class="layui-icon"></i>上传文件</button>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">积分</label>
+                <div class="layui-input-block">
+                    <input type="text" name="integral" lay-verify="name" autocomplete="off" placeholder="请输入积分"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">介绍</label>
+                <div class="layui-input-block">
+                    <textarea class="layui-textarea layui-hide" name="introduce" lay-verify="content"
+                              id="LAY_demo_editor"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'upload','element'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , upload = layui.upload
+            ,element = layui.element;
+
+        var uploadInst = upload.render({
+            elem: '#test1'
+            , url: '/upload/'
+            ,size: 100
+            , choose: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,auto:false
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+
+        //指定允许上传的文件类型
+        upload.render({
+            elem: '#test3'
+            , url: '/upload/'
+            , accept: 'file' //普通文件
+            ,auto: false
+            , done: function (res) {
+                console.log(res)
+            }
+        });
+
+        var editIndex = layedit.build('LAY_demo_editor');
+    });
+</script>
+</body>
+</html>
