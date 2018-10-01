@@ -31,8 +31,9 @@
 
 </form>
 <script>
-    layui.use('form', function(){
-        var form = layui.form;
+    layui.use(['form','element'], function(){
+        var form = layui.form
+            ,element=layui.element;
         form.on('submit(submit_form)',function (data) {
             var roleName= $('#role_name').val();
             var description= $('#description').val();

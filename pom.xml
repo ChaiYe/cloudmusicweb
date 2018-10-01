@@ -34,6 +34,7 @@
 		<swagger.version>2.7.0</swagger.version>
 		<pagehelper.version>4.1.4</pagehelper.version>
 		<kaptcha.version>2.3.2</kaptcha.version>
+		<jedis.version>2.9.0</jedis.version>
 	</properties>
 
 	<dependencies>
@@ -105,6 +106,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<!--Druid国内使用最广泛的数据库连接池-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -170,6 +172,13 @@
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
 			<version>1.4.0</version>
+		</dependency>
+
+		<!--jedis客户端-->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
 		</dependency>
 
 	</dependencies>

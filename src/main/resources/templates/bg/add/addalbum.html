@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>添加专辑</title>
+
+</head>
+<body>
+<blockquote class="layui-elem-quote layui-text">
+
+       <span class="layui-breadcrumb">
+          <a href="">歌曲管理</a>
+          <a href="">专辑</a>
+          <a><cite>添加专辑</cite></a>
+        </span>
+
+</blockquote>
+
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend style="margin-left:20px ">添加专辑</legend>
+</fieldset>
+<div style="width: 80%;margin: 58px auto">
+    <form class="layui-form" action="http://localhost:8080/cloudmusic/insert_singer" id="app" enctype="multipart/form-data" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">专辑名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" autocomplete="off" placeholder="请输入专辑名"  class="layui-input" v-on:blur="greet($event)">
+                <div>{{nameInfo}}</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上传图片</label>
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="upload">上传图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo1" >
+                    <p id="demoText"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">编辑器</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea layui-hide" name="introduction" id="LAY_demo_editor"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="submit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<link rel="stylesheet" href="../../../bg/layui/css/layui.css">
+<script src="../../../bg/layui/layui.js"></script>
+<script src="../../../bg/js/jquery-3.3.1.js"></script>
+<script src="../../../bg/js/vue.js"></script>
+<script src="../../../bg/js/axios.min.js"></script>
+<script src="../../../bg/js/address.js"></script>
+<!--数据校验-->
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            nameInfo:''
+        },
+        methods:{
+            greet:function (e) {
+
+            },
+            process:function (e) {
+                //获取输入框的值
+                console.log(e.currentTarget.value);
+            }
+        }
+    })
+</script>
+<!--起用LayUI的组件-->
+<script>
+    layui.use(['form', 'layedit', 'laydate','upload','element'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,$ = layui.jquery
+            ,upload = layui.upload
+            ,laydate = layui.laydate
+            ,element=layui.element;
+
+
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            });
+            return false;
+        });
+
+        /*图片上传*/
+        upload.render({
+            elem: '#upload'
+            ,auto: false
+            ,bindAction: '#app'
+            ,done: function(res){
+                console.log(res)
+            }
+        });
+    });
+</script>
+
+</html>

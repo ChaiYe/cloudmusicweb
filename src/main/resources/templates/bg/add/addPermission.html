@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="../../layui/css/layui.css">
-    <script src="../../layui/layui.js"></script>
-    <script src="../../js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="../../../bg/layui/css/layui.css">
+    <script src="../../../bg/layui/layui.js"></script>
+    <script src="../../../bg/js/jquery-3.3.1.js"></script>
+    <script src="../../../bg/js/vue.js"></script>
+    <script src="../../../bg/js/axios.min.js"></script>
 </head>
 <body>
 <blockquote class="layui-elem-quote layui-text">
@@ -37,8 +39,10 @@
 
 </form>
 <script>
-    layui.use('form', function(){
-        var form = layui.form;
+    layui.use(['form','element'], function(){
+        var form = layui.form
+            ,element=layui.element;
+
         form.on('submit(submit)',function (data) {
             var permission= $('#permission').val();
             var description= $('#description').val();
