@@ -5,6 +5,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -53,6 +54,7 @@ public class ShiroConfig {
     public  DefaultWebSecurityManager  securityManager(){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
         securityManager.setRealm(getuserRealm());
+        securityManager.setCacheManager(new ShiroRedisCacheManager(new JedisConnectionFactory()));
         return securityManager;
     }
 }
