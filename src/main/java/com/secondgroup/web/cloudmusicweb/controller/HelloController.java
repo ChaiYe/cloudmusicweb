@@ -166,7 +166,7 @@ public class HelloController {
      *
      * @return
      */
-    @GetMapping(value = "addsinger")
+    @GetMapping(value = "/addsinger")
     public String addSinger() {
         return "bg/add/addSinger";
     }
@@ -176,7 +176,7 @@ public class HelloController {
      *
      * @return
      */
-    @GetMapping(value = "addintegral")
+    @GetMapping(value = "/addintegral")
     public String addintegral() {
         return "bg/add/addIntegral";
     }
@@ -186,13 +186,27 @@ public class HelloController {
      *
      * @return
      */
-    @GetMapping(value = "addpermission")
+    @GetMapping(value = "/addpermission")
     public String addPermission() {
         return "bg/add/addPermission";
     }
 
-    @GetMapping("addalbum")
+    /**
+     * 添加专辑页面
+     * @return
+     */
+    @GetMapping("/addalbum")
     public String addAlbum(){
         return "bg/add/addalbum";
     }
+
+    /**
+     *使用excel上传歌曲页面
+     *  @return
+     */
+    @GetMapping("/addSongExcel")
+    public String addSongExcel() {
+        return "bg/add/addSongExcel";
+    }
+
 }
