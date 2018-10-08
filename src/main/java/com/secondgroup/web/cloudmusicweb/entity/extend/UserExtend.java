@@ -16,4 +16,11 @@ public class UserExtend extends User {
     @Setter
     List<UserRole> userRoles;
 
+    public List<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
 }

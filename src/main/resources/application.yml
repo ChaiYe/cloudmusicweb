@@ -85,13 +85,10 @@ logging:
   level.io.renren: debug
   path: logs/
   file: admin.log
-
 #mybatis-plus配置
 mybatis-plus:
   #mapper xml实现扫描路径
   mapper-locations: classpath*:mapper/*.xml
-  # 指定全局配置文件位置
-  config-location: classpath:mybatis/mybatis-config.xml
   #实体扫描，多个package用逗号或者分号分隔,type-aliases扫描路径
   typeAliasesPackage: com.secondgroup.web.cloudmusicweb.entity
   global-config:
@@ -119,4 +116,5 @@ mybatis-plus:
     lazyLoadingEnabled: true #延时加载的开关
     multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
 
-
+mybatis:
+  config-location: classpath*:mybatis/mybatis-config.xml

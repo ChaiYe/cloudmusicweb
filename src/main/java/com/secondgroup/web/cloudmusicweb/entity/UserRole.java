@@ -45,4 +45,31 @@ public class UserRole implements Serializable {
     private Role userRoleRole;
 
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getUserRoleId() {
+        return userRoleId;
+    }
+
+    public void setUserRoleId(Integer userRoleId) {
+        this.userRoleId = userRoleId;
+    }
+
+    public User getUserRoleUser() {
+        return userRoleUser;
+    }
+
+    public void setUserRoleUser(User userRoleUser) {
+        this.userRoleUser = userRoleUser;
+    }
+
+    public Role getUserRoleRole() {
+        return userRoleRole;
+    }
+
+    public void setUserRoleRole(Role userRoleRole) {
+        this.userRoleRole = userRoleRole;
+    }
 }

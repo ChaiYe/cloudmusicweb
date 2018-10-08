@@ -24,4 +24,19 @@ public class RoleExtend extends Role {
     @Setter
     private  List<RolePermiss> rolePermisses;
 
+    public List<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    public List<RolePermiss> getRolePermisses() {
+        return rolePermisses;
+    }
+
+    public void setRolePermisses(List<RolePermiss> rolePermisses) {
+        this.rolePermisses = rolePermisses;
+    }
 }

@@ -43,5 +43,31 @@ public class RolePermiss implements Serializable {
     @Getter
     private Permission rolePermissPermiss;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
+    public Integer getRolePermissId() {
+        return rolePermissId;
+    }
+
+    public void setRolePermissId(Integer rolePermissId) {
+        this.rolePermissId = rolePermissId;
+    }
+
+    public Role getRolePermissRole() {
+        return rolePermissRole;
+    }
+
+    public void setRolePermissRole(Role rolePermissRole) {
+        this.rolePermissRole = rolePermissRole;
+    }
+
+    public Permission getRolePermissPermiss() {
+        return rolePermissPermiss;
+    }
+
+    public void setRolePermissPermiss(Permission rolePermissPermiss) {
+        this.rolePermissPermiss = rolePermissPermiss;
+    }
 }
