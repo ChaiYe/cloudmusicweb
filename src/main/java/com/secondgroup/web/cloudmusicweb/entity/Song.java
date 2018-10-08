@@ -2,11 +2,12 @@ package com.secondgroup.web.cloudmusicweb.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -107,4 +108,139 @@ public class Song implements Serializable {
     private Integer songCommentIncrease;
 
 
+    public Integer getSongId() {
+        return songId;
+    }
+
+    public void setSongId(Integer songId) {
+        this.songId = songId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public Integer getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
+    }
+
+    public Integer getIsVip() {
+        return isVip;
+    }
+
+    public void setIsVip(Integer isVip) {
+        this.isVip = isVip;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getLyric() {
+        return lyric;
+    }
+
+    public void setLyric(String lyric) {
+        this.lyric = lyric;
+    }
+
+    public String getStorageUrl() {
+        return storageUrl;
+    }
+
+    public void setStorageUrl(String storageUrl) {
+        this.storageUrl = storageUrl;
+    }
+
+    public Long getPlayback() {
+        return playback;
+    }
+
+    public void setPlayback(Long playback) {
+        this.playback = playback;
+    }
+
+    public Long getCollection() {
+        return collection;
+    }
+
+    public void setCollection(Long collection) {
+        this.collection = collection;
+    }
+
+    public LocalDateTime getUploadTime() {
+        return uploadTime;
+    }
+
+    public void setUploadTime(LocalDateTime uploadTime) {
+        this.uploadTime = uploadTime;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getDurationTime() {
+        return durationTime;
+    }
+
+    public void setDurationTime(String durationTime) {
+        this.durationTime = durationTime;
+    }
+
+    public Integer getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(Integer integral) {
+        this.integral = integral;
+    }
+
+    public Integer getSongAlbum() {
+        return songAlbum;
+    }
+
+    public void setSongAlbum(Integer songAlbum) {
+        this.songAlbum = songAlbum;
+    }
+
+    public Integer getSongKindIncrease() {
+        return songKindIncrease;
+    }
+
+    public void setSongKindIncrease(Integer songKindIncrease) {
+        this.songKindIncrease = songKindIncrease;
+    }
+
+    public Integer getSongCommentIncrease() {
+        return songCommentIncrease;
+    }
+
+    public void setSongCommentIncrease(Integer songCommentIncrease) {
+        this.songCommentIncrease = songCommentIncrease;
+    }
 }
