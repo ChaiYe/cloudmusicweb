@@ -16,10 +16,13 @@ import java.util.List;
  */
 public interface UserMapper extends BaseMapper<User> {
 
-    public Integer selectlastId();
-
-
+    //通过名字获取用户信息和角色
     UserExtend getUserByusername(String username);
-
+    //通过名字获取用户信息
     User getOneByName(String username);
+
+    //添加用户信息
+    //修改用户信息
+    //删除用户信息
+
 }
