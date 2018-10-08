@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HelloController {
 
-    @RequestMapping("/hello")
+    @RequestMapping("/music")
     public String hello() {
         return "bg/management/BGManagement";
     }

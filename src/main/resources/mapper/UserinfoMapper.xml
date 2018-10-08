@@ -21,8 +21,17 @@
         </association>
     </resultMap>
 
+    <insert id="addUserinfoById">
+
+    </insert>
+
     <select id="getUserInfosList" resultMap="UserinfoMap">
-        select * from user,userinfo where userinfo.userinfo_user=user.user_id and user.type=0
+        select *
+        from user,userinfo
+        where
+        userinfo.userinfo_user=user.user_id
+        and
+        user.type=0
     </select>
 
 </mapper>

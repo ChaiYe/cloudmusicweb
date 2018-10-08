@@ -16,9 +16,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
     druid:
-      url: jdbc:mysql://localhost:3306/cloudmusic?serverTimezone=UTC&useSSL=false&autoReconnect=true&tinyInt1isBit=false&useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://193.112.5.25:3306/webmusic?serverTimezone=UTC&useSSL=false&autoReconnect=true&tinyInt1isBit=false&useUnicode=true&characterEncoding=utf8
       username: root
-      password: root
+      password: sbthcmlj
 
       # 连接池配置
       initial-size: 10
@@ -68,7 +68,7 @@ spring:
   #redis
   redis:
     database: 0
-    host: 127.0.0.1
+    host: 39.105.73.190
     port: 6379
     timeout: 3600
     jedis:
@@ -90,6 +90,8 @@ logging:
 mybatis-plus:
   #mapper xml实现扫描路径
   mapper-locations: classpath*:mapper/*.xml
+  # 指定全局配置文件位置
+  config-location: classpath:mybatis/mybatis-config.xml
   #实体扫描，多个package用逗号或者分号分隔,type-aliases扫描路径
   typeAliasesPackage: com.secondgroup.web.cloudmusicweb.entity
   global-config:

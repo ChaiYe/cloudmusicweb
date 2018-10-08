@@ -52,6 +52,16 @@ public class CloudmusicwebApplicationTests {
 	private RedisTemplate redisTemplate;
 
 	/**
+	 * 测试数据库连接
+	 */
+	@Test
+	public void testJdbcConnect(){
+		User user = userMapper.selectById(1);
+		System.out.println(user);
+		System.out.println("连接成功");
+		}
+
+	/**
 	 * 测试分页
 	 */
 	@Test

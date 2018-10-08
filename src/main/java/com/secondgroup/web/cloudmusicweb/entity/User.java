@@ -102,7 +102,7 @@ public class User implements Serializable {
     private Integer state;
 
     /**
-     * 用户类型
+     * 用户类型，0代表用户，1代表歌手
      */
 
     private Integer type;
