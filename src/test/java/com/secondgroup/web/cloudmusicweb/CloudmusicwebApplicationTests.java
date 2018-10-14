@@ -1,16 +1,18 @@
 package com.secondgroup.web.cloudmusicweb;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
-import com.secondgroup.web.cloudmusicweb.entity.Role;
-import com.secondgroup.web.cloudmusicweb.entity.Singer;
-import com.secondgroup.web.cloudmusicweb.entity.User;
-import com.secondgroup.web.cloudmusicweb.entity.Userinfo;
+import com.secondgroup.web.cloudmusicweb.controller.FocusController;
+import com.secondgroup.web.cloudmusicweb.controller.UserController;
+import com.secondgroup.web.cloudmusicweb.entity.*;
+import com.secondgroup.web.cloudmusicweb.mapper.FocusMapper;
 import com.secondgroup.web.cloudmusicweb.mapper.RoleMapper;
 import com.secondgroup.web.cloudmusicweb.mapper.UserMapper;
 import com.secondgroup.web.cloudmusicweb.mapper.UserinfoMapper;
+import com.secondgroup.web.cloudmusicweb.service.IFocusService;
 import com.secondgroup.web.cloudmusicweb.service.IUserService;
 import com.secondgroup.web.cloudmusicweb.service.impl.UserServiceImpl;
 import com.sun.org.apache.bcel.internal.generic.NEW;
@@ -51,6 +53,14 @@ public class CloudmusicwebApplicationTests {
 	@Autowired
 	private RedisTemplate redisTemplate;
 
+	@Autowired
+	private FocusController focusController;
+
+	@Autowired
+	private IFocusService focusService;
+
+	@Autowired
+	private FocusMapper focusMapper;
 	/**
 	 * 测试数据库连接
 	 */
@@ -107,5 +117,11 @@ public class CloudmusicwebApplicationTests {
 		User temp = operations.get("com.neox");
 		System.out.println(temp.toString());
 
+	}
+
+	@Test
+	public void test() throws Exception {
+		List<Focus> foci = focusService.pageWithName(1, 10, null);
+        System.out.println("book");
 	}
 }

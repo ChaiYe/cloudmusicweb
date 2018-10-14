@@ -16,9 +16,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
     druid:
-      url: jdbc:mysql://193.112.5.25:3306/webmusic?serverTimezone=UTC&useSSL=false&autoReconnect=true&tinyInt1isBit=false&useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://localhost:3306/cloudmusic?serverTimezone=UTC&useSSL=false&autoReconnect=true&tinyInt1isBit=false&useUnicode=true&characterEncoding=utf8
       username: root
-      password: sbthcmlj
+      password: root
 
       # 连接池配置
       initial-size: 10
@@ -68,7 +68,7 @@ spring:
   #redis
   redis:
     database: 0
-    host: 39.105.73.190
+    host: 127.0.0.1
     port: 6379
     timeout: 3600
     jedis:
@@ -82,6 +82,10 @@ spring:
 #日志
 logging:
   level: debug
+  level.root: INFO
+  level.org.springframework.web: DEBUG
+  level.org.hibernate: ERROR
+  level.com.looedu.mapper: debug
   level.io.renren: debug
   path: logs/
   file: admin.log

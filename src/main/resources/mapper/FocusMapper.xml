@@ -8,4 +8,104 @@
         <result property="focusToUser" column="focus_to_user"/>
     </resultMap>
 
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.User" id="FromUserMap">
+        <result property="userId" column="from_user_id"/>
+        <result property="name" column="from_name"/>
+        <result property="account" column="from_account"/>
+        <result property="password" column="from_password"/>
+        <result property="sex" column="from_sex"/>
+        <result property="birthday" column="from_birthday"/>
+        <result property="address" column="from_address"/>
+        <result property="introduce" column="from_introduce"/>
+        <result property="image" column="from_image"/>
+        <result property="registTime" column="from_regist_time"/>
+        <result property="state" column="from_state"/>
+        <result property="type" column="from_type"></result>
+    </resultMap>
+
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.User" id="ToUserMap">
+        <result property="userId" column="to_user_id"/>
+        <result property="name" column="to_name"/>
+        <result property="account" column="to_account"/>
+        <result property="password" column="to_password"/>
+        <result property="sex" column="to_sex"/>
+        <result property="birthday" column="to_birthday"/>
+        <result property="address" column="to_address"/>
+        <result property="introduce" column="to_introduce"/>
+        <result property="image" column="to_image"/>
+        <result property="registTime" column="to_regist_time"/>
+        <result property="state" column="to_state"/>
+        <result property="type" column="to_type"></result>
+    </resultMap>
+
+    <resultMap id="FocusMsg" type="com.secondgroup.web.cloudmusicweb.entity.extend.FocusExtend">
+        <result property="focusId" column="focus_id"/>
+        <association property="fromUser" javaType="User" resultMap="FromUserMap"></association>
+       <association property="toUser" javaType="User" resultMap="ToUserMap"></association>
+    </resultMap>
+
+    <sql id="fromUser">
+        `user1`.`user_id` AS `from_user_id `,
+    `user1`.`name`AS `from_name`,
+    `user1`.`account` AS `from_account`,
+    `user1`.`password` AS `from_password`,
+    `user1`.`sex`AS `from_sex`,
+    `user1`.`birthday`AS `from_birthday`,
+    `user1`.`address` AS `from_address`,
+    `user1`.`introduce` AS `from_introduce`,
+    `user1`.`image` AS `from_image`,
+    `user1`.`regist_time` AS `from_regist_time`,
+    `user1`.`state` AS `from_state`,
+    `user1`.`type` AS `from_type`,
+    `user1`.`email` AS `from_email`,
+    </sql>
+
+    <sql id="fromUserName">
+        `user1`.`name`AS `from_name`,
+    </sql>
+
+
+    <sql id="toUser">
+        `user2`.`user_id` AS `to_user_id `,
+    `user2`.`name`AS `to_name`,
+    `user2`.`account` AS `to_account`,
+    `user2`.`password` AS `to_password`,
+    `user2`.`sex`AS `to_sex`,
+    `user2`.`birthday`AS `to_birthday`,
+    `user2`.`address` AS `to_address`,
+    `user2`.`introduce` AS `to_introduce`,
+    `user2`.`image` AS `to_image`,
+    `user2`.`regist_time` AS `to_regist_time`,
+    `user2`.`state` AS `to_state`,
+    `user2`.`type` AS `to_type`,
+    `user2`.`email` AS `to_email`
+    </sql>
+    <sql id="toUserName">
+        `user2`.`name`AS `to_name`
+    </sql>
+
+    <sql id="focus">
+        `focus`.`focus_id`,
+      `focus`.`focus_from_user`,
+      `focus`.`focus_to_user`,
+    </sql>
+
+    <select id="pageWithName" resultMap="FocusMsg">
+          SELECT
+        <include refid="focus"></include>
+        <include refid="fromUserName"></include>
+        <include refid="toUserName"></include>
+          FROM focus,user user1,user user2
+        <where>
+            focus.focus_from_user=user1.user_id and focus.focus_to_user=user2.user_id
+            <if test="condition1!=null">
+              and user1.name=#{condition1}
+            </if>
+            <if test="condition2!=null">
+              and user2.name=#{condition2}
+            </if>
+        </where>
+
+    </select>
+
 </mapper>

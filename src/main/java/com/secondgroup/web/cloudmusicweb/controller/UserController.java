@@ -14,11 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
@@ -28,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -186,6 +184,18 @@ public class UserController {
 
         return  msg;
     }
+
+    @RequestMapping("del_user")
+    public Msg delUserById(Integer id){
+        boolean delResult = iUserService.removeById(id);
+        return delResult == true ? new Msg("删除成功") : new Msg("删除失败");
+    }
+
+    @RequestMapping("del_users")
+    public Msg delUsers(@RequestBody List<User> users){
+        return null;
+    }
+
 
 
 }
