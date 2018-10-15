@@ -1,14 +1,24 @@
 package com.secondgroup.web.cloudmusicweb.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.secondgroup.web.cloudmusicweb.entity.Permission;
+import com.secondgroup.web.cloudmusicweb.entity.Role;
+import com.secondgroup.web.cloudmusicweb.entity.Song;
+import com.secondgroup.web.cloudmusicweb.pagemodel.Grid;
 import com.secondgroup.web.cloudmusicweb.pagemodel.Msg;
 import com.secondgroup.web.cloudmusicweb.service.IPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * <p>
@@ -66,4 +76,17 @@ public class PermissionController {
         boolean updateResult = iPermissionService.updateById(permission);
         return updateResult==true?new Msg("更新成功"):new Msg("更新失败");
     }
+
+    @RequestMapping("/permission_page")
+    public Grid<Permission> getPermission(@RequestParam(value ="page",defaultValue = "1") Integer current, @RequestParam(value ="limit" ,defaultValue = "10") Integer size,  HttpSession session){
+        QueryWrapper<Permission> queryWrapper=new QueryWrapper<>();
+        IPage<Permission> page = iPermissionService.page(new Page<Permission>(current, size), queryWrapper);
+        Grid<Permission> permissionGrid = new Grid<>();
+        permissionGrid.setCount((long) iPermissionService.count(queryWrapper));
+        permissionGrid.setMsg("");
+        permissionGrid.setData(page.getRecords());
+        permissionGrid.setCode(0);
+        return permissionGrid;
+    }
+
 }

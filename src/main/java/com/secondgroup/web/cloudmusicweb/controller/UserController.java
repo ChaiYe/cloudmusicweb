@@ -3,7 +3,9 @@ package com.secondgroup.web.cloudmusicweb.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.secondgroup.web.cloudmusicweb.entity.Song;
 import com.secondgroup.web.cloudmusicweb.entity.User;
+import com.secondgroup.web.cloudmusicweb.pagemodel.Grid;
 import com.secondgroup.web.cloudmusicweb.pagemodel.Msg;
 import com.secondgroup.web.cloudmusicweb.service.IUserService;
 import org.apache.shiro.SecurityUtils;
@@ -23,6 +25,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
@@ -194,6 +197,21 @@ public class UserController {
     @RequestMapping("del_users")
     public Msg delUsers(@RequestBody List<User> users){
         return null;
+    }
+
+    @RequestMapping("user_page")
+    public Grid<User> getUsers(@RequestParam(value ="page",defaultValue = "1") Integer current, @RequestParam(value ="limit" ,defaultValue = "10") Integer size, User userCondition, HttpSession session){
+        QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
+
+        List<User> userList=iUserService.getPage(current,size,userCondition);
+
+        Grid<User> userGrid=new Grid<>();
+        userGrid.setCode(0);
+        userGrid.setMsg("");
+        userGrid.setCount((long) iUserService.count(userQueryWrapper));
+        userGrid.setData(userList);
+
+        return userGrid;
     }
 
 

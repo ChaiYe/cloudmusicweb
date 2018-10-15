@@ -21,6 +21,8 @@ public interface UserMapper extends BaseMapper<User> {
     //通过名字获取用户信息
     User getOneByName(String username);
 
+    List<User> getUserPage(User userCondition);
+
     //添加用户信息
     //修改用户信息
     //删除用户信息

@@ -10,18 +10,15 @@
     <style>
         body{margin: 10px;}
     </style>
-    <script src="../../layui/layui.js"></script>
+   <!-- <script src="../../layui/layui.js"></script>
     <script src="../../layui/lay/modules/jquery.js"></script>
     <script src="../../js/jquery-3.3.1.js"></script>
-    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css">-->
 
 </head>
 <body>
 <div class="demoTable">
-    <div class="layui-inline">
 
-    </div>
-    <button class="layui-btn" id="search" data-type="reload"><i class="layui-icon" >&#xe615;</i>  搜索</button>
 </div>
 <table class="layui-hide" id="demo" lay-filter="test"></table>
 <script type="text/html" id="toolbarDemo">
@@ -51,7 +48,7 @@
         table.render({
             elem: '#demo'
             ,height: 420
-            ,url: '#' //数据接口
+            ,url: 'song/song_page' //数据接口
             ,title: '歌曲表'
             ,page: true //开启分页
             ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -61,8 +58,8 @@
                     {type: 'checkbox', fixed: 'left'}
                     ,{field:'name', title:'歌名', width:180, fixed: 'left', unresize: true, sort: true}
                     ,{field:'picUrl', title:'图片', width:200,edit:true}
-                    ,{field:'isActive', title:'是否可用', width:200,edit:true}
-                    ,{field:'isVip', title:'是否VIP', width:200,edit:true}
+                    ,{field:'isActive', title:'是否可用', width:200,templet: '#isActive', unresize: true}
+                    ,{field:'isVip', title:'是否VIP', width:200,templet: '#switchTpl', unresize: true}
                     ,{field:'size', title:'大小', width:200,edit:true}
                     ,{field:'lyric', title:'歌词', width:200,edit:true}
                     ,{field:'storageUrl', title:'存储路径', width:200,edit:true}
@@ -72,8 +69,8 @@
                     ,{field:'note', title:'介绍信息', width:200,edit:true}
                     ,{field:'durationTime', title:'歌曲时长', width:200,edit:true}
                     ,{field:'integral', title:'积分', width:200,edit:true}
-                    ,{field:'albumName', title:'专辑名', width:200,edit:true}
-                    ,{field:'kind', title:'所属的类型', width:200,edit:true}
+                    ,{field:'albumName', title:'专辑名', templet:"<div>{{d.album.name}}</div>"}
+                    ,{field:'kind', title:'所属的类型', width:200,templet:"<div>{{d.kindIncrease.kind[0].baseKind.name}}</div>"}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}
 
                 ]
@@ -82,8 +79,13 @@
         });
         active = {
             reload: function(){
+                var roleNameS = $('#role_name_s');
 
-
+                table.reload('reload_table', {
+                    where: {
+                        "condition": roleNameS.val()
+                    }
+                });
             }
         };
         $('#search').on('click', function(){
@@ -148,6 +150,14 @@
         });
     });
 </script>
+
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="lock" value="{{d.isVip}}"  lay-skin="switch" lay-text="是|否"  {{ d.isVip == 1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="isActive">
+    <input type="checkbox" name="isActive" value="{{d.isActive}}" title="启用" {{ d.isActive   == 1 ? 'checked' : '' }} >
+</script>
+
 <script type="text/javascript">
 
 </script>

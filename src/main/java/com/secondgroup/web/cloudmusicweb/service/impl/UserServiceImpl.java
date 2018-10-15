@@ -1,5 +1,6 @@
 package com.secondgroup.web.cloudmusicweb.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.secondgroup.web.cloudmusicweb.entity.*;
 import com.secondgroup.web.cloudmusicweb.entity.extend.RoleExtend;
 import com.secondgroup.web.cloudmusicweb.entity.extend.UserExtend;
@@ -64,5 +65,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User getOneByName(String username) {
         return userMapper.getOneByName(username);
+    }
+
+    @Override
+    public List<User> getPage(Integer current, Integer size, User userCondition) {
+
+        PageHelper.startPage(current, size);
+        List<User> userList= userMapper.getUserPage(userCondition);
+        return userList;
     }
 }

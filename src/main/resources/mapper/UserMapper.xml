@@ -50,19 +50,32 @@
         <result property="type" column="type"></result>
         <collection property="userRoles" ofType="com.secondgroup.web.cloudmusicweb.entity.UserRole" >
             <association property="userRoleRole"   javaType="com.secondgroup.web.cloudmusicweb.entity.Role">
-                <result property="roleId" column="role_id"/>
+               <!-- <result property="roleId" column="role_id"/>
                 <result property="roleName" column="role_name"/>
-                <result property="description" column="description"/>
+                <result property="description" column="description"/>-->
             </association>
         </collection>
     </resultMap>
 
+    <resultMap id="UserWithInfoMap" type="UserInfoExtend">
+        <result property="userId" column="user_id"/>
+        <result property="name" column="name"/>
+        <result property="account" column="account"/>
+        <result property="password" column="password"/>
+        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="address" column="address"/>
+        <result property="introduce" column="introduce"/>
+        <result property="image" column="image"/>
+        <result property="registTime" column="regist_time"/>
+        <result property="state" column="state"/>
+        <result property="type" column="type"></result>
+        <association property="userinfo" resultMap="com.secondgroup.web.cloudmusicweb.mapper.UserinfoMapper.UserinfoMap"></association>
+    </resultMap>
 
 
-    
-    <select id="selectlastId" resultType="java.lang.Integer">
-        select max(user_id) from user;
-    </select>
+
+
 
     <!--选择根据用户昵称选择用户，返回结果附带用户角色-->
     <select id="getUserByusername" resultMap="UserRoleMap">
@@ -74,6 +87,16 @@
         select
         *
         from user where account=#{username}
+    </select>
+    <select id="getUserPage" resultMap="UserWithInfoMap">
+      select *  from user,userinfo WHERE  user.user_id=userinfo.userinfo_user
+          <if test="name!=null">
+              and user.name=#{name}
+          </if>
+        <if test="email!=null">
+            and user.email=#{email}
+        </if>
+
     </select>
 
 

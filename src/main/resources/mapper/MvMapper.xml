@@ -15,4 +15,23 @@
         <result property="mvCommentIncrease" column="mv_comment_increase"/>
     </resultMap>
 
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.extend.MvExtend" id="MvWithObject">
+        <result property="mvId" column="mv_id"/>
+        <result property="uploadtime" column="uploadtime"/>
+        <result property="playback" column="playback"/>
+        <result property="collection" column="collection"/>
+        <result property="download" column="download"/>
+        <result property="integral" column="integral"/>
+        <result property="mvPicUrl" column="mv_pic_url"/>
+        <association property="song" resultMap="com.secondgroup.web.cloudmusicweb.mapper.SongMapper.SongMap"></association>
+
+    </resultMap>
+
+    <select id="getPage" resultMap="MvWithObject">
+         select *  from mv,song where mv.mv_song=song.song_id
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) from mv,song where mv.mv_song=song.song_id
+    </select>
+
 </mapper>

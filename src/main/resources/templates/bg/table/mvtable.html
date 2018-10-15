@@ -18,10 +18,18 @@
 </head>
 <body>
 <div class="demoTable">
-    <div class="layui-inline">
-
-    </div>
-    <button class="layui-btn" id="search" data-type="reload"><i class="layui-icon" >&#xe615;</i>  搜索</button>
+    <fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+        <legend>查询条件</legend>
+        <div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="condition1" id="mvCondition" required  placeholder="根据歌名筛选" autocomplete="off" class="layui-input">
+                </div>
+                <button class="layui-btn" id="search" data-type="reload" style="margin-left: 36px"><i class="layui-icon" >&#xe615;</i>  搜索</button>
+            </div>
+        </div>
+    </fieldset>
 </div>
 <table class="layui-hide" id="demo" lay-filter="test"></table>
 <script type="text/html" id="toolbarDemo">
@@ -48,7 +56,7 @@
         table.render({
             elem: '#demo'
             ,height: 420
-            ,url: '#' //数据接口
+            ,url: 'mv/mv_page' //数据接口
             ,title: '专辑表'
             ,page: true //开启分页
             ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -56,7 +64,7 @@
             ,cols: [
                 [
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field:'mvID', title:'编号', width:180, fixed: 'left', unresize: true, sort: true}
+                    ,{field:'mvId', title:'编号', width:180, fixed: 'left', unresize: true, sort: true}
                     /*,{field:'mvName', title:'mv名称', width:200,edit:true}，数据库没有此字段*/
                     ,{field:'uploadtime', title:'上传时间', width:200,edit:true}
                     ,{field:'playback', title:'播放量', width:200,edit:true}
@@ -64,23 +72,29 @@
                     ,{field:'download', title:'下载量', width:200,edit:true}
                     ,{field:'integral', title:'积分', width:200,edit:true}
                     ,{field:'mvPicUrl', title:'mv图片', width:200,edit:true}
-                    ,{field:'songName', title:'歌名', width:200,edit:true}
-                    ,{field:'kind', title:'类型', width:200,edit:true}
+                    ,{field:'songName', title:'歌名', templet:"<div>{{d.song.name}}</div>"}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}
                 ]
             ]
             ,id: 'reload_table'
         });
+        /*条件查询*/
         active = {
             reload: function(){
-
-
+                var condition = $("#mvCondition").val();
+                console.log(condition);
+                table.reload('reload_table', {
+                    where: {
+                        "mvCondition.song.name":condition
+                    }
+                });
             }
         };
         $('#search').on('click', function(){
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
+
 
         //监听行工具事件
         table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"

@@ -9,4 +9,15 @@
         <result property="downloadTime" column="download_time"/>
     </resultMap>
 
+    <resultMap id="DownloadWithObject" type="com.secondgroup.web.cloudmusicweb.entity.extend.DownloadExtend">
+        <result property="downloadId" column="download_id"/>
+        <result property="downloadTime" column="download_time"/>
+        <association property="user" resultMap="com.secondgroup.web.cloudmusicweb.mapper.UserMapper.UserMap"></association>
+        <association property="song" resultMap="com.secondgroup.web.cloudmusicweb.mapper.SongMapper.SongMap"></association>
+    </resultMap>
+
+    <select id="getPage" resultMap="DownloadWithObject">
+        select * from download,user,song WHERE download.download_song=song.song_id and download.download_user=user.user_id
+    </select>
+
 </mapper>

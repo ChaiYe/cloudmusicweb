@@ -18,10 +18,23 @@
 </head>
 <body>
 <div class="demoTable">
-    <div class="layui-inline">
-
+    <fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+    <legend>查询条件</legend>
+    <div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" id="name"  placeholder="根据姓名查找" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">邮件</label>
+            <div class="layui-input-inline">
+                <input type="text" name="email" id="email"  placeholder="根据邮箱查找" autocomplete="off" class="layui-input">
+            </div>
+            <button class="layui-btn" id="search" data-type="reload" style="margin-left: 36px"><i class="layui-icon" >&#xe615;</i>  搜索</button>
+        </div>
     </div>
-    <button class="layui-btn" id="search" data-type="reload"><i class="layui-icon" >&#xe615;</i>  搜索</button>
+</fieldset>
+
 </div>
 <table class="layui-hide" id="demo" lay-filter="test"></table>
 <script type="text/html" id="toolbarDemo">
@@ -49,7 +62,7 @@
         table.render({
             elem: '#demo'
             ,height: 420
-            ,url: '#' //数据接口
+            ,url: 'user/user_page' //数据接口
             ,title: '用户表'
             ,page: true //开启分页
             ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -60,7 +73,7 @@
                     ,{field:'name', title:'用户名', width:180, fixed: 'left', unresize: true, sort: true}
                     ,{field:'account', title:'昵称', width:200,edit:true}
                     ,{field:'password', title:'密码', width:200,edit:true}
-                    ,{field:'sex', title:'性别', width:200,edit:true}
+                    ,{field:'sex', title:'性别', width:200,templet:"<div>{{d.sex?'男':'女'}}</div>"}
                     ,{field:'birthday', title:'生日', width:200,edit:true}
                     ,{field:'address', title:'地址', width:200,edit:true}
                     ,{field:'introduce', title:'简介', width:200,edit:true}
@@ -68,8 +81,8 @@
                     ,{field:'registerTime', title:'注册时间', width:200,edit:true}
                     ,{field:'state', title:'状态', width:200,edit:true}
                     ,{field:'email', title:'邮件', width:200,edit:true}
-                    ,{field:'durationTime', title:'用户积分', width:200,edit:true}
-                    ,{field:'integral', title:'是否VIP', width:200,edit:true}
+                    ,{field:'durationTime', title:'用户积分', templet:"<div>{{d.userinfo.totalIntegral }}</div>"}
+                    ,{field:'integral', title:'是否VIP', templet:"<div>{{d.userinfo.isVip?'是':'否'}}</div>"}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}
 
                 ]
@@ -78,8 +91,16 @@
         });
         active = {
             reload: function(){
-
-
+                var name = $('#name').val();
+                var email = $('#email').val();
+                console.log(name);
+                console.log(email);
+                table.reload('reload_table', {
+                    where: {
+                        "name": name,
+                        "email":email
+                    }
+                });
             }
         };
         $('#search').on('click', function(){

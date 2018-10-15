@@ -3,6 +3,8 @@ package com.secondgroup.web.cloudmusicweb.mapper;
 import com.secondgroup.web.cloudmusicweb.entity.Song;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SongMapper extends BaseMapper<Song> {
 
+    List<Song> selectList(String condition);
 }

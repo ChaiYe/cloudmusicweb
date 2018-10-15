@@ -2,6 +2,7 @@ package com.secondgroup.web.cloudmusicweb.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.pagehelper.PageHelper;
 import com.secondgroup.web.cloudmusicweb.entity.Song;
 import com.secondgroup.web.cloudmusicweb.exception.ExcelException;
 import com.secondgroup.web.cloudmusicweb.mapper.SongMapper;
@@ -117,5 +118,12 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
         }
 
         return false;
+    }
+
+    @Override
+    public List<Song> getPage(Integer current, Integer size, String condition) {
+        PageHelper.startPage(current,size);
+        List<Song> songList = songMapper.selectList(condition);
+        return songList;
     }
 }

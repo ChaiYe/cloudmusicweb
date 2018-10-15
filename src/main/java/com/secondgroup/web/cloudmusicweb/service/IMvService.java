@@ -2,6 +2,9 @@ package com.secondgroup.web.cloudmusicweb.service;
 
 import com.secondgroup.web.cloudmusicweb.entity.Mv;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.secondgroup.web.cloudmusicweb.entity.extend.MvExtend;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IMvService extends IService<Mv> {
 
+    List<Mv> getPage(Integer current, Integer size, MvExtend mvCondition);
+
+    int count(MvExtend mvCondition);
 }

@@ -8,10 +8,7 @@ import com.github.pagehelper.PageHelper;
 import com.secondgroup.web.cloudmusicweb.controller.FocusController;
 import com.secondgroup.web.cloudmusicweb.controller.UserController;
 import com.secondgroup.web.cloudmusicweb.entity.*;
-import com.secondgroup.web.cloudmusicweb.mapper.FocusMapper;
-import com.secondgroup.web.cloudmusicweb.mapper.RoleMapper;
-import com.secondgroup.web.cloudmusicweb.mapper.UserMapper;
-import com.secondgroup.web.cloudmusicweb.mapper.UserinfoMapper;
+import com.secondgroup.web.cloudmusicweb.mapper.*;
 import com.secondgroup.web.cloudmusicweb.service.IFocusService;
 import com.secondgroup.web.cloudmusicweb.service.IUserService;
 import com.secondgroup.web.cloudmusicweb.service.impl.UserServiceImpl;
@@ -61,6 +58,15 @@ public class CloudmusicwebApplicationTests {
 
 	@Autowired
 	private FocusMapper focusMapper;
+
+	@Autowired
+	private SongMapper songMapper;
+
+	@Autowired
+	private MvMapper mvMapper;
+
+	@Autowired
+	private DownloadMapper downloadMapper;
 	/**
 	 * 测试数据库连接
 	 */
@@ -121,7 +127,14 @@ public class CloudmusicwebApplicationTests {
 
 	@Test
 	public void test() throws Exception {
-		List<Focus> foci = focusService.pageWithName(1, 10, null);
-        System.out.println("book");
+		/*List<Focus> foci = focusService.pageWithName(1, 10, null);
+        System.out.println("book");*/
+		/*List<Mv> page = mvMapper.getPage(null);
+		System.out.println(page);*/
+		List<Download> mapperPage = downloadMapper.getPage(null);
+		System.out.println("困");
+
 	}
+
+
 }
