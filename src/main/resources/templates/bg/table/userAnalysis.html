@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <style>
+        .main{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px;
+            grid-auto-rows: minmax(100px, auto);
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    <div class="main">
+        <div id="main" style="height:600px">
+
+        </div>
+        <div id="table" style="height:600px">
+
+        </div>
+        <div id="chart3" style="height: 600px">
+
+        </div>
+    </div>
+</div>
+
+
+<!-- ECharts单文件引入 -->
+<script src="../../../bg/js/vue.js"></script>
+<script src="../../../bg/js/echarts.min.js"></script>
+<script src="../../../bg/js/axios.min.js"></script>
+<script src="http://echarts.baidu.com/asset/map/js/china.js"></script>
+<script type="text/javascript">
+    window.onload=function (ev) {
+
+        var vm=new Vue({
+            el:'#content',
+            data:{
+                datas:[
+                    {value:335, name:'直接访问'},
+                    {value:310, name:'邮件营销'},
+                    {value:274, name:'联盟广告'},
+                    {value:235, name:'视频广告'},
+                    {value:400, name:'搜索引擎'}
+                ],
+                columnardatas:["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"],
+                columnardatas2:[5, 20, 40, 10, 10, 20]
+            },
+            mounted(){
+                    axios.get('user/analysisSex').then(
+                       // response => (this.data = response)
+                        function result(response) {
+                            vm.datas=response;
+
+                            var chart3=echarts.init(document.getElementById('chart3'));
+                            chart3.setOption({backgroundColor: '#fff',
+                                title: {
+                                    text: '男女比例',
+                                    left: 'center',
+                                    top: 20,
+                                    textStyle: {
+                                        color: '#ccc'
+                                    }
+                                },
+                                tooltip : {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },
+                                visualMap: {
+                                    show: false,
+                                    min: 80,
+                                    max: 600,
+                                    inRange: {
+                                        colorLightness: [0, 1]
+                                    }
+                                },
+                                series : [
+                                    {
+                                        name:'访问来源',
+                                        type:'pie',
+                                        radius : '55%',
+                                        center: ['50%', '50%'],
+                                        data:vm.datas.data.sort(function (a, b) { return a.value - b.value; }),
+                                        roseType: 'radius',
+                                        label: {
+                                            normal: {
+                                                textStyle: {
+                                                    color: 'rgba(255, 255, 255, 0.3)'
+                                                }
+                                            }
+                                        },
+                                        labelLine: {
+                                            normal: {
+                                                lineStyle: {
+                                                    color: 'rgba(210, 2, 255, 0.3)'
+                                                },
+                                                smooth: 0.2,
+                                                length: 10,
+                                                length2: 20
+                                            }
+                                        },
+                                        itemStyle: {
+                                            normal: {
+                                                color: '#fff',
+                                                shadowBlur: 200,
+                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                            }
+                                        },
+
+                                        animationType: 'scale',
+                                        animationEasing: 'elasticOut',
+                                        animationDelay: function (idx) {
+                                            return Math.random() * 200;
+                                        }
+                                    }
+                                ]});
+                        }
+                    );
+                    debugger;
+                    axios.get('user/analysisAge').then(
+                        function result2(response) {
+                            vm.$data.columnardatas=response.data.list1;
+                            vm.$data.columnardatas2=response.data.list2;
+                            var myChart =echarts.init(document.getElementById('main'));
+                            myChart.setOption({
+                                tooltip: {
+                                    show: true
+                                },
+                                legend: {
+                                    data:['销量']
+                                },
+                                xAxis : [
+                                    {
+                                        type : 'category',
+                                        data : vm.$data.columnardatas
+                                    }
+                                ],
+                                yAxis : [
+                                    {
+                                        type : 'value'
+                                    }
+                                ],
+                                series : [
+                                    {
+                                        "name":"销量",
+                                        "type":"bar",
+                                        "data":vm.$data.columnardatas2
+                                    }
+                                ]
+                            });
+
+                        }
+                    )
+
+            }
+        });
+
+        var symbolSize = 20;
+        var data = [
+            [15, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]
+        ];
+        var init = echarts.init(document.getElementById("table"));
+        init.setOption({
+            tooltip: {
+                triggerOn: 'none',
+                formatter: function (params) {
+                    return 'X: ' + params.data[0].toFixed(2) + '<br>Y: ' + params.data[1].toFixed(2);
+                }
+            },
+            xAxis: {
+                min: -100,
+                max: 80,
+                type: 'value',
+                axisLine: {onZero: false}
+            },
+            yAxis: {
+                min: -30,
+                max: 60,
+                type: 'value',
+                axisLine: {onZero: false}
+            },
+            series: [
+                {
+                    id: 'a',
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: symbolSize,
+                    data: data
+                }
+            ],
+        });
+
+
+
+    }
+</script>
+</body>

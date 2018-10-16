@@ -29,6 +29,7 @@ public class DownloadController {
     @Autowired
     private IDownloadService downloadService;
 
+    @RequestMapping("/download_page")
     public Grid<Download> getDownload(@RequestParam(value ="page",defaultValue = "1") Integer current, @RequestParam(value ="limit" ,defaultValue = "10") Integer size, @RequestParam(value="condition", defaultValue = "") String condition , HttpSession session) {
 
         List<Download>  list=downloadService.getPage(current,size,condition);

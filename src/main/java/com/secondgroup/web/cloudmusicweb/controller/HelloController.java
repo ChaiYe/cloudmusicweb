@@ -209,4 +209,9 @@ public class HelloController {
         return "bg/add/addSongExcel";
     }
 
+
+    @GetMapping("/userAnalysis")
+    public String userAnalysis(){
+        return "bg/table/userAnalysis";
+    }
 }

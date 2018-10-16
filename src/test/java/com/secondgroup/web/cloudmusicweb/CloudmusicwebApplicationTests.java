@@ -9,10 +9,13 @@ import com.secondgroup.web.cloudmusicweb.controller.FocusController;
 import com.secondgroup.web.cloudmusicweb.controller.UserController;
 import com.secondgroup.web.cloudmusicweb.entity.*;
 import com.secondgroup.web.cloudmusicweb.mapper.*;
+import com.secondgroup.web.cloudmusicweb.pagemodel.Msg;
 import com.secondgroup.web.cloudmusicweb.service.IFocusService;
+import com.secondgroup.web.cloudmusicweb.service.ISingerService;
 import com.secondgroup.web.cloudmusicweb.service.IUserService;
 import com.secondgroup.web.cloudmusicweb.service.impl.UserServiceImpl;
 import com.sun.org.apache.bcel.internal.generic.NEW;
+import io.lettuce.core.ScriptOutputType;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -67,6 +71,12 @@ public class CloudmusicwebApplicationTests {
 
 	@Autowired
 	private DownloadMapper downloadMapper;
+
+	@Autowired
+	private ISingerService iSingerService;
+
+	@Autowired
+	private UserController userController;
 	/**
 	 * 测试数据库连接
 	 */
@@ -131,10 +141,11 @@ public class CloudmusicwebApplicationTests {
         System.out.println("book");*/
 		/*List<Mv> page = mvMapper.getPage(null);
 		System.out.println(page);*/
-		List<Download> mapperPage = downloadMapper.getPage(null);
-		System.out.println("困");
+		/*List<Singer> page = iSingerService.getPage(1, 10, null);
+		System.out.println(page);*/
 
-	}
+
+    }
 
 
 }

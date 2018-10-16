@@ -2,6 +2,9 @@ package com.secondgroup.web.cloudmusicweb.service;
 
 import com.secondgroup.web.cloudmusicweb.entity.Singer;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.secondgroup.web.cloudmusicweb.entity.User;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISingerService extends IService<Singer> {
 
+    int count(User singerCondition);
+
+    List<Singer> getPage(Integer current, Integer size, User singerCondition);
 }

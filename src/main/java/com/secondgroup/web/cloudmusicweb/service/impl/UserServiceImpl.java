@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -73,5 +74,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         PageHelper.startPage(current, size);
         List<User> userList= userMapper.getUserPage(userCondition);
         return userList;
+    }
+
+    @Override
+    public List<Map<String, String>> analysisAge() {
+        return userMapper.analysisAge();
     }
 }

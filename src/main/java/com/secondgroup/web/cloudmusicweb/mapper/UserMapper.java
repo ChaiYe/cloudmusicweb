@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.secondgroup.web.cloudmusicweb.entity.extend.UserExtend;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -26,5 +27,6 @@ public interface UserMapper extends BaseMapper<User> {
     //添加用户信息
     //修改用户信息
     //删除用户信息
+    List<Map<String,String>> analysisAge();
 
 }

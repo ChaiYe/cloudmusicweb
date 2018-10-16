@@ -8,5 +8,22 @@
         <result property="selfIntro" column="selfIntro"/>
         <result property="singerUser" column="singer_user"/>
     </resultMap>
+    <resultMap type="com.secondgroup.web.cloudmusicweb.entity.extend.SingerExtend" id="SingerWithObject">
+        <result property="singId" column="sing_id"/>
+        <result property="fansNum" column="fans_num"/>
+        <result property="selfIntro" column="selfIntro"/>
+        <association property="user" resultMap="com.secondgroup.web.cloudmusicweb.mapper.UserMapper.UserMap"></association>
+    </resultMap>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) FROM  user,singer where user.user_id=singer.singer_user
+    </select>
+    <select id="getPage" resultMap="SingerWithObject">
+        SELECT * FROM user,.singer where singer.singer_user=user.user_id
+
+          <!--  <if test="name!=null">
+                and user.name=#{name}
+            </if>-->
+
+    </select>
 
 </mapper>

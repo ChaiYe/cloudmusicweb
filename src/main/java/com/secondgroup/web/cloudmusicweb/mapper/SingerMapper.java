@@ -2,6 +2,9 @@ package com.secondgroup.web.cloudmusicweb.mapper;
 
 import com.secondgroup.web.cloudmusicweb.entity.Singer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.secondgroup.web.cloudmusicweb.entity.User;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SingerMapper extends BaseMapper<Singer> {
 
+    int count(User singerCondition);
+
+    List<Singer> getPage(User singerCondition);
 }

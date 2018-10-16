@@ -49,7 +49,7 @@
         table.render({
             elem: '#demo'
             ,height: 420
-            ,url: '#' //数据接口
+            ,url: 'singer/singer_page' //数据接口
             ,title: '歌手表'
             ,page: true //开启分页
             ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -57,17 +57,17 @@
             ,cols: [
                 [
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field:'name', title:'用户名', width:180, fixed: 'left', unresize: true, sort: true}
-                    ,{field:'account', title:'昵称', width:200,edit:true}
-                    ,{field:'password', title:'密码', width:200,edit:true}
-                    ,{field:'sex', title:'性别', width:200,edit:true}
-                    ,{field:'birthday', title:'生日', width:200,edit:true}
-                    ,{field:'address', title:'地址', width:200,edit:true}
-                    ,{field:'introduce', title:'简介', width:200,edit:true}
-                    ,{field:'image', title:'图片', width:200,edit:true}
-                    ,{field:'registerTime', title:'注册时间', width:200,edit:true}
-                    ,{field:'state', title:'状态', width:200,edit:true}
-                    ,{field:'email', title:'邮件', width:200,edit:true}
+                    ,{field:'name', title:'用户名', width:180, fixed: 'left', unresize: true, sort: true,templet:"<div>{{d.user.name}}</div>"}
+                    ,{field:'account', title:'昵称', width:200,templet:"<div>{{d.user.account}}</div>"}
+                    ,{field:'password', title:'密码', width:200,edit:true,templet:"<div>{{d.user.password}}</div>"}
+                    ,{field:'sex', title:'性别', width:200,edit:true,templet:"<div>{{d.user.sex==0?'男':'女'}}</div>"}
+                    ,{field:'birthday', title:'生日', width:200,edit:true,templet:"<div>{{d.user.birthday}}</div>"}
+                    ,{field:'address', title:'地址', width:200,edit:true,templet:"<div>{{d.user.address}}</div>"}
+                    ,{field:'introduce', title:'简介', width:200,edit:true,templet:"<div>{{d.user.introduce}}</div>"}
+                    ,{field:'image', title:'图片', width:200,edit:true,templet:"<div>{{d.user.image}}</div>"}
+                    ,{field:'registerTime', title:'注册时间', width:200,edit:true,templet:"<div>{{d.user.registTime}}</div>"}
+                    ,{field:'state', title:'状态', width:200,edit:true,templet:"<div>{{d.user.state==1?'已激活':'未激活'}}</div>"}
+                    ,{field:'email', title:'邮件', width:200,edit:true,templet:"<div>{{d.user.email}}</div>"}
                     ,{field:'fansNum', title:'粉丝数量', width:200,edit:true}
                     ,{field:'selfIntro', title:'自我介绍', width:200,edit:true}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}

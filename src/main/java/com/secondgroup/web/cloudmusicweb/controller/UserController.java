@@ -1,9 +1,9 @@
 package com.secondgroup.web.cloudmusicweb.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.secondgroup.web.cloudmusicweb.entity.Song;
 import com.secondgroup.web.cloudmusicweb.entity.User;
 import com.secondgroup.web.cloudmusicweb.pagemodel.Grid;
 import com.secondgroup.web.cloudmusicweb.pagemodel.Msg;
@@ -15,10 +15,7 @@ import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.MimeMessage;
@@ -28,7 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -215,5 +215,55 @@ public class UserController {
     }
 
 
+    /**
+     * 分析性别
+     * @return
+     */
+    @RequestMapping("/analysisSex")
+    public Object analysisSex(){
+        //获取性别为男的数量
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("sex",1);
+        int male = iUserService.count(userQueryWrapper);
 
+        Map<String, Object> map1 = new HashMap<String, Object>(2);
+        map1.put("name", "男");
+        map1.put("value", male);
+
+        //获取性别为女的数量
+        QueryWrapper<User> userQueryWrapper2 = new QueryWrapper<>();
+        userQueryWrapper2.eq("sex",0);
+        int female = iUserService.count(userQueryWrapper2);
+        Map<String, Object> map2 = new HashMap<String, Object>(2);
+        map2.put("name", "女");
+        map2.put("value", female);
+
+        List<Map<String, Object>> outList = new ArrayList<Map<String, Object>>();
+        outList.add(map1);
+        outList.add(map2);
+        return outList;
+    }
+
+    @RequestMapping("/analysisAge")
+    public Map analysisAge(){
+        List<Map<String, String>> list = iUserService.analysisAge();
+        List<String> list1 = new ArrayList<>();
+        List<String> list2 = new ArrayList<>();
+
+        for (int i = 0; i <list.size() ; i++) {
+            list1.add(list.get(i).get("年龄段"));
+            list2.add(list.get(i).get("人数"));
+        }
+        Map map = new HashMap();
+        map.put("list1", list1);
+        map.put("list2", list2);
+        System.out.println(JSON.toJSON(map));
+
+        return map;
+    }
+
+    @RequestMapping("/analysicArea")
+    public void analysicArea(){
+
+    }
 }
