@@ -57,19 +57,19 @@
                 [
                     {type: 'checkbox', fixed: 'left'}
                     ,{field:'name', title:'歌名', width:180, fixed: 'left', unresize: true, sort: true}
-                    ,{field:'picUrl', title:'图片', width:200,edit:true}
+                    ,{field:'picUrl', title:'图片', width:200}
                     ,{field:'isActive', title:'是否可用', width:200,templet: '#isActive', unresize: true}
                     ,{field:'isVip', title:'是否VIP', width:200,templet: '#switchTpl', unresize: true}
-                    ,{field:'size', title:'大小', width:200,edit:true}
+                    ,{field:'size', title:'大小', width:200}
                     ,{field:'lyric', title:'歌词', width:200,edit:true}
-                    ,{field:'storageUrl', title:'存储路径', width:200,edit:true}
-                    ,{field:'playback', title:'播放量', width:200,edit:true}
-                    ,{field:'collection', title:'收藏量', width:200,edit:true}
-                    ,{field:'uploadTime', title:'上传时间', width:200,edit:true}
+                    ,{field:'storageUrl', title:'存储路径', width:200}
+                    ,{field:'playback', title:'播放量', width:200}
+                    ,{field:'collection', title:'收藏量', width:200}
+                    ,{field:'uploadTime', title:'上传时间', width:200}
                     ,{field:'note', title:'介绍信息', width:200,edit:true}
-                    ,{field:'durationTime', title:'歌曲时长', width:200,edit:true}
+                    ,{field:'durationTime', title:'歌曲时长', width:200}
                     ,{field:'integral', title:'积分', width:200,edit:true}
-                    ,{field:'albumName', title:'专辑名', templet:"<div>{{d.album.name}}</div>"}
+                    ,{field:'albumName', title:'专辑名',  width:200,templet:"<div>{{d.album.name}}</div>"}
                     ,{field:'kind', title:'所属的类型', width:200,templet:"<div>{{d.kindIncrease.kind[0].baseKind.name}}</div>"}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}
 
@@ -99,6 +99,20 @@
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'del'){
                 layer.confirm('真的删除行么', function(index){
+
+                    $.ajax({
+                        type:'GET',
+                        url:'/song/del_song',
+                        data:{"id":obj.data.songId},
+                        dataType:"json",
+                        success: function(data){
+                            debugger;
+                            obj.del();
+                        },
+                        error:function (data) {
+                        }
+                    });
+
                     layer.close(index);
                 });
             }else if(layEvent==="addMV"){
@@ -121,7 +135,29 @@
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     }else {
+                        layer.confirm('真的删除这些用户么', function(index){
+                            $.ajax({
+                                type:'POST',
+                                url:'/song/del_songs',
+                                contentType: "application/json",
+                                data:JSON.stringify(data),
+                                dataType:"json",
+                                success: function(data){
+                                    /*此次应该使用表格重载是不合适的*/
+                                    table.reload('reload_table',{
+                                        page: {
+                                            curr: 1//重新从第 1 页开始
+                                        }
+                                    });
 
+                                },
+                                error:function (data) {
+                                    alert("失败");
+                                }
+                            });
+
+                            layer.close(index);
+                        });
                     }
 
                     break;

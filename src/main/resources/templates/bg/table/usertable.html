@@ -48,15 +48,18 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
-
+<script type="text/html" id="checkboxTpl">
+    <input type="checkbox" name="lock" value="{{d.state}}" title="可用" lay-filter="lockDemo" {{ d.state == 1 ? 'checked' : '' }}>
+</script>
 <script>
 
 
-    layui.use(['laypage', 'layer', 'table'], function(){
+    layui.use(['laypage', 'layer', 'table','form'], function(){
         var laydate = layui.laydate //日期
             ,laypage = layui.laypage //分页
             ,layer = layui.layer //弹层
             ,table = layui.table //表格
+            ,form=layui.form
 
         //执行一个 table 实例
         table.render({
@@ -71,20 +74,19 @@
                 [
                     {type: 'checkbox', fixed: 'left'}
                     ,{field:'name', title:'用户名', width:180, fixed: 'left', unresize: true, sort: true}
-                    ,{field:'account', title:'昵称', width:200,edit:true}
-                    ,{field:'password', title:'密码', width:200,edit:true}
+                    ,{field:'account', title:'昵称', width:200}
+                    ,{field:'password', title:'密码', width:200}
                     ,{field:'sex', title:'性别', width:200,templet:"<div>{{d.sex?'男':'女'}}</div>"}
-                    ,{field:'birthday', title:'生日', width:200,edit:true}
+                    ,{field:'birthday', title:'生日', width:200}
                     ,{field:'address', title:'地址', width:200,edit:true}
                     ,{field:'introduce', title:'简介', width:200,edit:true}
-                    ,{field:'image', title:'图片', width:200,edit:true}
-                    ,{field:'registerTime', title:'注册时间', width:200,edit:true}
-                    ,{field:'state', title:'状态', width:200,edit:true}
+                    ,{field:'image', title:'图片', width:200}
+                    ,{field:'registerTime', title:'注册时间', width:200}
+                    ,{field:'state', title:'状态', width:200,/*,templet:'#checkboxTpl'*/edit:true}
                     ,{field:'email', title:'邮件', width:200,edit:true}
-                    ,{field:'durationTime', title:'用户积分', templet:"<div>{{d.userinfo.totalIntegral }}</div>"}
-                    ,{field:'integral', title:'是否VIP', templet:"<div>{{d.userinfo.isVip?'是':'否'}}</div>"}
+                    ,{field:'durationTime', title:'用户积分', width:200,templet:"<div>{{d.userinfo.totalIntegral }}</div>"}
+                    ,{field:'integral', title:'是否VIP', width:200,templet:"<div>{{d.userinfo.isVip?'是':'否'}}</div>"}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}
-
                 ]
             ]
             ,id: 'reload_table'
@@ -113,9 +115,44 @@
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'del'){
+                debugger;
                 layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        type:'GET',
+                        url:'/user/del_user',
+                        data:{"id":obj.data.userId},
+                        dataType:"json",
+                        success: function(data){
+                            debugger;
+                            obj.del();
+                        },
+                        error:function (data) {
+                        }
+                    });
                     layer.close(index);
                 });
+            } else if(layEvent === 'edit'){
+
+                $.ajax({
+                    type:"post",
+                    url:'user/update_user',
+                    dataType:"JSON",
+                    async:false,
+                    data:{
+                        "userId":data.userId,
+                        "address":data.address,
+                        "introduce":data.introduce,
+                        "state":data.state,
+                        "email":data.email
+                    },
+                    success:function (data) {
+                        table.reload('reload_table',{
+                            page: {
+                                curr: 1//重新从第 1 页开始
+                            }
+                        });
+                    }
+                })
             }
         });
 
@@ -127,7 +164,30 @@
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     }else {
+                        layer.confirm('真的删除这些用户么', function(index){
+                            console.log(JSON.stringify(data));
+                            $.ajax({
+                                type:'POST',
+                                url:'/user/del_users',
+                                contentType: "application/json",
+                                data:JSON.stringify(data),
+                                dataType:"json",
+                                success: function(data){
+                                    /*此次应该使用表格重载是不合适的*/
+                                    table.reload('reload_table',{
+                                        page: {
+                                            curr: 1//重新从第 1 页开始
+                                        }
+                                    });
 
+                                },
+                                error:function (data) {
+                                    alert("失败");
+                                }
+                            });
+
+                            layer.close(index);
+                        });
                     }
 
                     break;
@@ -143,6 +203,12 @@
 
                     break;
             };
+        });
+
+        form.on('checkbox(lockDemo)', function(obj){
+            layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+            debugger;
+            this.value=obj.elem.checked==true?1:0;
         });
     });
 </script>

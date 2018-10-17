@@ -34,7 +34,6 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     public List<Singer> getPage(Integer current, Integer size, User singerCondition) {
         PageHelper.startPage(1, 10);
         List<Singer> singlist=singerMapper.getPage(singerCondition);
-
         return singlist;
     }
 }

@@ -3,10 +3,12 @@ package com.secondgroup.web.cloudmusicweb.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.secondgroup.web.cloudmusicweb.entity.Mv;
+import com.secondgroup.web.cloudmusicweb.entity.Song;
 import com.secondgroup.web.cloudmusicweb.entity.extend.MvExtend;
 import com.secondgroup.web.cloudmusicweb.pagemodel.Grid;
 import com.secondgroup.web.cloudmusicweb.service.IMvService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +45,26 @@ public class MvController {
         mvGrid.setData(mvList);
         mvGrid.setCount((long) count);
         return mvGrid;
+    }
+
+    @RequestMapping("/del_mv")
+    public Boolean delMv(Integer id){
+        boolean b=mvService.removeById(id);
+        return b;
+    }
+
+    @RequestMapping("/del_mvs")
+    public Boolean delMvs(@RequestBody List<Mv> mvs){
+        for(Mv mv:mvs){
+            delMv(mv.getMvId());
+        }
+        return true;
+    }
+
+    @RequestMapping("/update_mv")
+    public Boolean updateMv(Mv mv){
+        boolean b = mvService.updateById(mv);
+        return b;
     }
 
 }

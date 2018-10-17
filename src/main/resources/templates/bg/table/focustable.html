@@ -41,10 +41,10 @@
     <div class="layui-btn-container">
     </div>
 </script>
-<script type="text/html" id="barDemo">
+<!--<script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">更新</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
+</script>-->
 
 
 <script>
@@ -63,17 +63,13 @@
             ,url: 'focus/focus_page' //数据接口
             ,title: '关注表'
             ,page: true //开启分页
-            ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-            ,totalRow: true //开启合计行
+           // ,toolbar: '#toolbarDemo' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+           // ,totalRow: false //开启合计行
             ,cols: [
                 [
-                    {type: 'checkbox', fixed: 'left'}
-                    ,{field:'focusId', title:'编号', width:180, fixed: 'left', unresize: true, sort: true}
-                    ,{field:'fromUser.name', title:'关注者', width:400,templet:'<div>{{d.fromUser.name}}<div>'}
-                    ,{field:'toUser.name', title:'被关注者', width:400,templet:'<div>{{d.toUser.name}}<div>'}
-                    /*,{field:'focusTime', title:'关注时间', width:200,edit:true}数据库中没有这个字段*/
-                    /*可以根据关注时间，对用户做图表分析，查看用户在某个时间段粉丝增长数量，以及关注该用户的性别比例等信息*/
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
+                    {field:'focusId', title:'编号', width:200, fixed: 'left', sort: true ,fixed: 'left'}
+                    ,{field:'fromUser.name', title:'关注者', width:550,templet:'<div>{{d.fromUser.name}}<div>'}
+                    ,{field:'toUser.name', title:'被关注者', width:550,templet:'<div>{{d.toUser.name}}<div>'}
                 ]
             ]
             ,id: 'reload_table'
@@ -84,8 +80,6 @@
             reload: function(){
                 var condition1 = $('#condition1');
                 var condition2 = $('#condition2');
-                console.log("职位"+condition1.val());
-                console.log("职位"+condition2.val());
                 var condition=JSON.stringify([
                     condition1.val(),
                     condition2.val()
@@ -104,7 +98,7 @@
         });
 
         //监听行工具事件
-        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        /*table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'del'){
@@ -112,7 +106,7 @@
                     layer.close(index);
                 });
             }
-        });
+        });*/
     });
 </script>
 <script type="text/javascript">

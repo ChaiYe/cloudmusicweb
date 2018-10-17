@@ -66,13 +66,13 @@
                     {type: 'checkbox', fixed: 'left'}
                     ,{field:'mvId', title:'编号', width:180, fixed: 'left', unresize: true, sort: true}
                     /*,{field:'mvName', title:'mv名称', width:200,edit:true}，数据库没有此字段*/
-                    ,{field:'uploadtime', title:'上传时间', width:200,edit:true}
-                    ,{field:'playback', title:'播放量', width:200,edit:true}
-                    ,{field:'collection', title:'收藏量', width:200,edit:true}
-                    ,{field:'download', title:'下载量', width:200,edit:true}
+                    ,{field:'uploadtime', title:'上传时间', width:200}
+                    ,{field:'playback', title:'播放量', width:200}
+                    ,{field:'collection', title:'收藏量', width:200}
+                    ,{field:'download', title:'下载量', width:200}
                     ,{field:'integral', title:'积分', width:200,edit:true}
-                    ,{field:'mvPicUrl', title:'mv图片', width:200,edit:true}
-                    ,{field:'songName', title:'歌名', templet:"<div>{{d.song.name}}</div>"}
+                    ,{field:'mvPicUrl', title:'mv图片', width:200}
+                    ,{field:'songName', title:'歌名',templet:"<div>{{d.song.name}}</div>", width:200}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}
                 ]
             ]
@@ -102,8 +102,38 @@
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'del'){
                 layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        type:'GET',
+                        url:'/mv/del_mv',
+                        data:{"id":obj.data.mvId},
+                        dataType:"json",
+                        success: function(data){
+                            obj.del();
+                        },
+                        error:function (data) {
+                        }
+                    });
                     layer.close(index);
                 });
+            }
+            else if(layEvent === 'edit'){
+                $.ajax({
+                    type:"post",
+                    url:'mv/update_mv',
+                    dataType:"JSON",
+                    async:false,
+                    data:{
+                        "mvId":data.mvId,
+                        "integral":data.integral
+                    },
+                    success:function (data) {
+                        table.reload('reload_table',{
+                            page: {
+                                curr: 1//重新从第 1 页开始
+                            }
+                        });
+                    }
+                })
             }
         });
 
@@ -115,7 +145,30 @@
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     }else {
+                        layer.confirm('真的删除这些么', function(index){
+                            console.log(JSON.stringify(data));
+                            $.ajax({
+                                type:'POST',
+                                url:'/mv/del_mvs',
+                                contentType: "application/json",
+                                data:JSON.stringify(data),
+                                dataType:"json",
+                                success: function(data){
+                                    /*此次应该使用表格重载是不合适的*/
+                                    table.reload('reload_table',{
+                                        page: {
+                                            curr: 1//重新从第 1 页开始
+                                        }
+                                    });
 
+                                },
+                                error:function (data) {
+                                    alert("失败");
+                                }
+                            });
+
+                            layer.close(index);
+                        });
                     }
 
                     break;

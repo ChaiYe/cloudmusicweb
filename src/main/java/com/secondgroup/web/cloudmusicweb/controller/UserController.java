@@ -5,9 +5,11 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.secondgroup.web.cloudmusicweb.entity.User;
+import com.secondgroup.web.cloudmusicweb.entity.Userinfo;
 import com.secondgroup.web.cloudmusicweb.pagemodel.Grid;
 import com.secondgroup.web.cloudmusicweb.pagemodel.Msg;
 import com.secondgroup.web.cloudmusicweb.service.IUserService;
+import com.secondgroup.web.cloudmusicweb.service.IUserinfoService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -48,6 +50,8 @@ public class UserController {
     private   IUserService iUserService;
     @Autowired
     JavaMailSenderImpl javaMailSender;
+    @Autowired
+    private IUserinfoService userinfoService;
 
     /**
      * 登录密码校验
@@ -188,15 +192,25 @@ public class UserController {
         return  msg;
     }
 
-    @RequestMapping("del_user")
+    @RequestMapping("/del_user")
     public Msg delUserById(Integer id){
-        boolean delResult = iUserService.removeById(id);
+        QueryWrapper<Userinfo> userinfoQueryWrapper = new QueryWrapper<>();
+        userinfoQueryWrapper.eq("userinfo_user",id);
+        boolean b = userinfoService.remove(userinfoQueryWrapper);
+        boolean delResult=false;
+        if(b==true){
+           delResult = iUserService.removeById(id);
+        }
         return delResult == true ? new Msg("删除成功") : new Msg("删除失败");
     }
 
-    @RequestMapping("del_users")
-    public Msg delUsers(@RequestBody List<User> users){
-        return null;
+    @RequestMapping("/del_users")
+    public Boolean delUsers(@RequestBody List<User> users){
+        for (User user:users) {
+            delUserById(user.getUserId());
+        }
+
+        return true;
     }
 
     @RequestMapping("user_page")
@@ -214,6 +228,11 @@ public class UserController {
         return userGrid;
     }
 
+    @RequestMapping("/update_user")
+    public Boolean updateUser(User user){
+        boolean b = iUserService.updateById(user);
+        return b;
+    }
 
     /**
      * 分析性别

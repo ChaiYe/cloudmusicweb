@@ -16,7 +16,6 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm"  lay-event="add">添加</button>
-        <button class="layui-btn layui-btn-sm" lay-event="delete">批量删除</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
@@ -45,10 +44,9 @@
             ,totalRow: true //开启合计行
             ,cols: [
                 [
-                    {type: 'checkbox', fixed: 'left'}
-                    ,{field:'permissionId', title:'编号', width:180, fixed: 'left', unresize: true, sort: true}
-                    ,{field:'permission', title:'权限', width:200,edit:true}
-                    ,{field:'description', title:'描述', width:200,edit:true}
+                    {field:'permissionId', title:'编号', width:180, fixed: 'left', unresize: true, sort: true}
+                    ,{field:'permission', title:'权限', width:500,edit:true}
+                    ,{field:'description', title:'描述', width:500,edit:true}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}
                 ]
             ]
@@ -71,30 +69,57 @@
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'del'){
                 layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        type:'GET',
+                        url:'/permission/del_permission',
+                        data:{"id":obj.data.permissionId},
+                        dataType:"json",
+                        success: function(data){
+                            obj.del();
+                        },
+                        error:function (data) {
+                        }
+                    });
+
                     layer.close(index);
                 });
+            }
+            else if(layEvent === 'edit'){
+                $.ajax({
+                    type:"post",
+                    url:'permission/update_permission',
+                    dataType:"JSON",
+                    async:false,
+                    data:{
+                        "permissionId":data.permissionId,
+                        "permission":data.permission,
+                        "description":data.description
+                    },
+                    success:function (data) {
+                        table.reload('reload_table',{
+                            page: {
+                                curr: 1//重新从第 1 页开始
+                            }
+                        });
+                    }
+                })
             }
         });
 
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
-                case 'delete':
-                    var data=checkStatus.data;
-                    if(data.length === 0){
-                        layer.msg('请选择一行');
-                    }else {
-
-                    }
-
-                    break;
                 case'add':
                     layer.open({
                         type: 2,
                         area: ['50%', '50%'], //宽高
                         content: 'addpermission',
                         cancel: function (index) {
-
+                            table.reload('reload_table',{
+                                page: {
+                                    curr: 1//重新从第 1 页开始
+                                }
+                            });
                         }
                     });
 

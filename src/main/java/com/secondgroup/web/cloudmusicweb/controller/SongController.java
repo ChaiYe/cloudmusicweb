@@ -63,4 +63,21 @@ public class SongController {
         return songGrid;
     }
 
+
+    @RequestMapping("/del_song")
+    public Boolean delSong(Integer id){
+        boolean b = songService.removeById(id);
+        return b;
+    }
+
+    @RequestMapping("/del_songs")
+    public Boolean delSongs(@RequestBody List<Song> songs){
+        for(Song song:songs){
+            delSong(song.getSongId());
+        }
+        return true;
+    }
+
+
+
 }

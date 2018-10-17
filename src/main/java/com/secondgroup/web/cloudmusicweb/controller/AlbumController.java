@@ -9,12 +9,14 @@ import com.secondgroup.web.cloudmusicweb.entity.Role;
 import com.secondgroup.web.cloudmusicweb.pagemodel.Grid;
 import com.secondgroup.web.cloudmusicweb.service.IAlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * <p>
@@ -44,5 +46,26 @@ public class AlbumController {
         albumGrid.setCount((long) iAlbumService.count(albumQueryWrapper));
 
         return albumGrid;
+    }
+
+    @RequestMapping("/del_album")
+    public Boolean delAlbum(Integer id){
+        boolean b = iAlbumService.removeById(id);
+        return b;
+    }
+
+
+    @RequestMapping("/del_albums")
+    public Boolean delAlbums(@RequestBody List<Album> albumList){
+        for (Album album: albumList){
+                    delAlbum(album.getAlbumId());
+        }
+        return true;
+    }
+    
+    @RequestMapping("/update_album")
+    public Boolean updateAlbum(Album album){
+        boolean b = iAlbumService.updateById(album);
+        return  b;
     }
 }

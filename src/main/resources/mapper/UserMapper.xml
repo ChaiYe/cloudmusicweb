@@ -69,6 +69,7 @@
         <result property="image" column="image"/>
         <result property="registTime" column="regist_time"/>
         <result property="state" column="state"/>
+        <result property="email" column="email"/>
         <result property="type" column="type"></result>
         <association property="userinfo" resultMap="com.secondgroup.web.cloudmusicweb.mapper.UserinfoMapper.UserinfoMap"></association>
     </resultMap>

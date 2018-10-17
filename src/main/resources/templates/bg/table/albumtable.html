@@ -56,13 +56,13 @@
             ,totalRow: true //开启合计行
             ,cols: [
                 [
-                    {type: 'checkbox', fixed: 'left'}
-                    ,{field:'name', title:'专辑名', width:180, fixed: 'left', unresize: true, sort: true}
-                    ,{field:'time', title:'上传时间', width:200,edit:true}
-                    ,{field:'collectNum', title:'收藏量', width:200,edit:true}
+                    {type: 'checkbox',width:30, fixed: 'left'}
+                    ,{field:'name', title:'专辑名', width:180, fixed: 'left', unresize: true, sort: true,edit:true}
+                    ,{field:'time', title:'上传时间', width:200}
+                    ,{field:'collectNum', title:'收藏量', width:200}
                     ,{field:'introduction', title:'介绍', width:200,edit:true}
-                    ,{field:'image', title:'图片', width:200,edit:true}
-                    ,{field:'singerName', title:'歌手', width:200,edit:true}
+                    ,{field:'image', title:'图片', width:200}
+                    ,{field:'albumSinger', title:'歌手', width:200}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}
                 ]
             ]
@@ -85,8 +85,40 @@
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'del'){
                 layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        type:'GET',
+                        url:'/album/del_album',
+                        data:{"id":obj.data.albumId},
+                        dataType:"json",
+                        success: function(data){
+                            obj.del();
+                        },
+                        error:function (data) {
+                        }
+                    });
                     layer.close(index);
+
                 });
+            }
+            else if(layEvent === 'edit'){
+                $.ajax({
+                    type:"post",
+                    url:'album/update_album',
+                    dataType:"JSON",
+                    async:false,
+                    data:{
+                        "albumId":data.albumId,
+                        "name":data.name,
+                        "introduction":data.introduction
+                    },
+                    success:function (data) {
+                        table.reload('reload_table',{
+                            page: {
+                                curr: 1//重新从第 1 页开始
+                            }
+                        });
+                    }
+                })
             }
         });
 
@@ -98,7 +130,30 @@
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     }else {
+                        layer.confirm('真的删除这些么', function(index){
+                            console.log(JSON.stringify(data));
+                            $.ajax({
+                                type:'POST',
+                                url:'album/del_albums',
+                                contentType: "application/json",
+                                data:JSON.stringify(data),
+                                dataType:"json",
+                                success: function(data){
+                                    /*此次应该使用表格重载是不合适的*/
+                                    table.reload('reload_table',{
+                                        page: {
+                                            curr: 1//重新从第 1 页开始
+                                        }
+                                    });
 
+                                },
+                                error:function (data) {
+                                    alert("失败");
+                                }
+                            });
+
+                            layer.close(index);
+                        });
                     }
 
                     break;
