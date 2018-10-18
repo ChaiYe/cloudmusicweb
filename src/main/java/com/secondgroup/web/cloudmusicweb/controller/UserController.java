@@ -26,7 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -170,7 +172,7 @@ public class UserController {
      * @throws Exception
      */
     @PostMapping("/registered")
-    public Msg registered(User user) throws  Exception{
+    public String registered(User user) throws  Exception{
         Msg msg = new Msg();
 
         MimeMessage mimeMessage=javaMailSender.createMimeMessage();
@@ -181,15 +183,26 @@ public class UserController {
         helper.setTo(user.getEmail());
         helper.setFrom("3156056300@qq.com");
 
-        helper.addAttachment("1.jpg",new File("D:\\壁纸\\wallhaven-363984.jpg"));
+      //  helper.addAttachment("1.jpg",new File("D:\\壁纸\\wallhaven-363984.jpg"));
 
         javaMailSender.send(mimeMessage);
 
         user.setType(1);
+        user.setSex(1);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        user.setBirthday(LocalDateTime.parse("1975-06-01 12:17:45",df));
+        user.setAddress("广东省");
 
         boolean save = iUserService.save(user);
 
-        return  msg;
+        Userinfo userinfo = new Userinfo();
+        userinfo.setTotalIntegral(0);
+        userinfo.setIsVip(0);
+       userinfo.setUserinfoUser(user.getUserId());
+        boolean save1 = userinfoService.save(userinfo);
+
+
+        return  "添加成功";
     }
 
     @RequestMapping("/del_user")
@@ -213,9 +226,24 @@ public class UserController {
         return true;
     }
 
-    @RequestMapping("user_page")
+    @RequestMapping("/user_page")
     public Grid<User> getUsers(@RequestParam(value ="page",defaultValue = "1") Integer current, @RequestParam(value ="limit" ,defaultValue = "10") Integer size, User userCondition, HttpSession session){
         QueryWrapper<User> userQueryWrapper=new QueryWrapper<>();
+      /*  if(userCondition!=null){
+            if(userCondition.getName()!=null){
+                userQueryWrapper.eq("name",userCondition.getName());
+            }
+            if (userCondition.getEmail()!=null){
+                userQueryWrapper.eq("email",userCondition.getEmail());
+            }
+        }
+*/
+   /*   if(userCondition.getEmail()!=null){
+          userCondition.setEmail(userCondition.getEmail().trim());
+      }
+      if(userCondition.getName()!=null){
+          userCondition.setName(userCondition.getEmail().trim());
+      }*/
 
         List<User> userList=iUserService.getPage(current,size,userCondition);
 
@@ -284,5 +312,11 @@ public class UserController {
     @RequestMapping("/analysicArea")
     public void analysicArea(){
 
+    }
+
+    @RequestMapping("/add_user")
+    public boolean addUser(User user){
+        boolean save = iUserService.save(user);
+        return save;
     }
 }

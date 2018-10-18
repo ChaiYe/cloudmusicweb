@@ -48,7 +48,7 @@ public class Userinfo implements Serializable {
     /**
      * 用户id
      */
-    /*private Integer userinfoUser;*/
+    private Integer userinfoUser;
 
     /**
      * 用户
@@ -90,5 +90,13 @@ public class Userinfo implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getUserinfoUser() {
+        return userinfoUser;
+    }
+
+    public void setUserinfoUser(Integer userinfoUser) {
+        this.userinfoUser = userinfoUser;
     }
 }

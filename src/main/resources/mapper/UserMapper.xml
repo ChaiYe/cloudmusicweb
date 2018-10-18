@@ -50,9 +50,9 @@
         <result property="type" column="type"></result>
         <collection property="userRoles" ofType="com.secondgroup.web.cloudmusicweb.entity.UserRole" >
             <association property="userRoleRole"   javaType="com.secondgroup.web.cloudmusicweb.entity.Role">
-               <!-- <result property="roleId" column="role_id"/>
+                <result property="roleId" column="role_id"/>
                 <result property="roleName" column="role_name"/>
-                <result property="description" column="description"/>-->
+                <result property="description" column="description"/>
             </association>
         </collection>
     </resultMap>
@@ -91,10 +91,10 @@
     </select>
     <select id="getUserPage" resultMap="UserWithInfoMap">
       select *  from user,userinfo WHERE  user.user_id=userinfo.userinfo_user
-          <if test="name!=null">
+          <if test="name!=null and name!=''">
               and user.name=#{name}
           </if>
-        <if test="email!=null">
+        <if test="email!=null and email!=''">
             and user.email=#{email}
         </if>
 
