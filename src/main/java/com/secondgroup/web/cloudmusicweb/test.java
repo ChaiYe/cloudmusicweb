@@ -7,4 +7,7 @@ package com.secondgroup.web.cloudmusicweb;
  * @Description
  */
 public class test {
+    public static void main(String[] args) {
+        test
+    }
 }
